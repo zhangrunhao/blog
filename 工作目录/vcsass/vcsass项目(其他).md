@@ -7,3 +7,7 @@
 * '/src/vue_expand/view/home/index.vue'作为类似的顶级组件
 * 其中引入了`top-nav`作为其中`<router-view></router-view>`的路由跳转
 * `:index`作为其要跳转的地址
+
+## keyboard.js中引入`autobind-decorator`
+
+* autobind-decorator: npm包: 我理解的是自动绑定this

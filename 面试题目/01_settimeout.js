@@ -15,4 +15,4 @@ setTimeout(function () {
 }, 1000)
 console.log(2)
 
-// 2, 5, 1 - 1s --> 4, 3, 6
+// 2, 5, 1 ---1s---> 4, 3, 6
