@@ -15,6 +15,8 @@
 //  [ 7, 8, 9 ]
 // ]
 // 输出: [1,2,3,6,9,8,7,4,5]
+
+
 const snail = function(array) {
   var result;
   while (array.length) {
