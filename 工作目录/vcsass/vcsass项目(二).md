@@ -87,13 +87,66 @@
 
 > 混入
 
-* event.js: 事件的注入, 关于
-* 
+* event.js: 事件的注入. 整个项目的事件绑定关系来源于此. 分别关系到:
+  * `/vue_expand/form/field/basic/filed-min.js`
+  * `/vue_expand/core/bo/space.js`
+  * 关系为核心事件通信机制, 后面再展开去看
+* leave.js: 离开事件, 用来表示离开时所处理为保存内容
+* quick-add.js: 快速新增事件. 具体作用未知, 在核心组件中, 都将其作为事件传入
 
 ## router
 
+> 路由
+
+* index.js: 导入路由文件, 并对路由进行一系列处理
+* routes.js: 路由文件, 存放具体路由信息
+
 ## store
+
+> vuex状态管理器
+
+* index.js: 导出全局状态
+* avatar: 为何感觉是随机出来一个颜色..
+* domain: 无用
+* notify: 通知. 具体作用未知, 存了一些共用的变量
+* route: 当前录用的一个状态
+* search: 当前搜素的内容
+* user: 存储了与当前用户相关的数据
+* view: 视图相关, 当然里面只有一个bodywidth
 
 ## style
 
+> 存放了公用样式库
+
 ## view
+
+> 业务相关
+
+### home
+
+> 主业务组件
+
+* index.vue: 整体, 不知道在view里面的那个index.vue有什么作用
+* 403
+* 404
+* app
+* approval
+* file
+* index
+* moudle
+* notify-center
+* schedule
+* search
+* setting
+
+### login
+
+> 登录页面
+
+### test
+
+> 测试页面
+
+### index.vue
+
+> 还没有找到这个组件的具体作用
