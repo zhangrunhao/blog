@@ -136,7 +136,8 @@ ajaxRouter.use('/config/url-prefix', function (next) {
   next();
 });
 
-let context = await ajaxRouter.send({
+let context = await ajaxRouter.send({ // 此处传入的对象, 会经过use中一系列的修改.
+  // 返回的就是还是这个对象, 但是只执行white中的函数, 不执行black中的. 两个条件必须都满足
   whiteList: ['/config'].concat(whiteList),
   blackList,
   config,
