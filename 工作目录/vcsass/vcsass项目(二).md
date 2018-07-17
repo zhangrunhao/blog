@@ -124,20 +124,20 @@
 
 ### home
 
-> 主业务组件
+> 主业务组件: 具体业务后续的再添加和更新吧. 做到了, 就直达了.
 
-* index.vue: 整体, 不知道在view里面的那个index.vue有什么作用
-* 403
-* 404
-* app
+* index.vue: 整体布局. 登录后的所有页面都在这了.
+* 403: 如果权限不足, 转过来
+* 404: 如果没找到资源.
+* app:
 * approval
-* file
+* file: 文件库管理
 * index
 * moudle
 * notify-center
-* schedule
-* search
-* setting
+* schedule: 日程管理
+* search: 搜索
+* setting: 设置页面主题
 
 ### login
 
