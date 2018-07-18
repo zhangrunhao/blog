@@ -121,25 +121,29 @@ export default class Router{
 ### `ajax`伪代码
 
 ```js
-ajaxRouter.use('/config/basic-param', function (next) {
-  kr._.merge(this.config, {
-    timeout: 40000,
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
-  next();
+const Router=require('../dist/index.js').default;
+let router=new Router();
+router.use('/test/output0',function(next){
+    this.text+=0;
+    console.log(0);
+    next();
 });
-
-ajaxRouter.use('/config/url-prefix', function (next) {
-  this.config.url = `/api/${this.config.url}`.replace(/\/{2,}/g, '/');
-  next();
+router.use('/test/output1',function(next){
+    this.text+=1;
+    console.log(1);
+    next();
 });
-
-let context = await ajaxRouter.send({ // 此处传入的对象, 会经过use中一系列的修改.
+router.use('/test/output2',function(next){
+    this.text+=2;
+    console.log(2);
+    next();
+});
+router.send({// 此处传入的对象, 会经过use中一系列的修改.
   // 返回的就是还是这个对象, 但是只执行white中的函数, 不执行black中的. 两个条件必须都满足
-  whiteList: ['/config'].concat(whiteList),
-  blackList,
-  config,
-  });
+    whiteList:['/test'],
+    blackList:['/test/output1'],
+    text:''
+}).then(function(context){
+    console.log(context.text);
+});
 ```
