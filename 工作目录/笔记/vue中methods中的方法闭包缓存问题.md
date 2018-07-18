@@ -1,5 +1,7 @@
 # vue中methods中的方法闭包缓存问题
 
+> 本人所有文章首发在博客园: [http://www.cnblogs.com/zhangrunhao/](http://www.cnblogs.com/zhangrunhao/)
+
 ## 问题背景
 
 ### 需求描述
