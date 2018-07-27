@@ -2,9 +2,15 @@
 
 ## 参考
 
+> 感谢作者
+
 * [从一个奇怪的错误出发理解 Vue 基本概念](https://segmentfault.com/a/1190000008530684)
 * [安装 - Vue.js](https://cn.vuejs.org/v2/guide/installation.html)
 * [渲染函数 - Vue.js](https://cn.vuejs.org/v2/guide/render-function.html)
+* [Vue2 dist 目录下各个文件的区别](https://www.cnblogs.com/FineDay/p/8757166.html)
+* [聊聊 package.json 文件中的 module 字段](https://loveky.github.io/2018/02/26/tree-shaking-and-pkg.module/)
+* [ES6模块 和 CommonJS 的区别](https://wmaqingbo.github.io/blog/2017/09/15/ES6%E6%A8%A1%E5%9D%97-%E5%92%8C-CommonJS-%E7%9A%84%E5%8C%BA%E5%88%AB/)
+
 
 ## 问题背景
 
@@ -54,3 +60,60 @@
 ## 查找vue.runtime.common.js
 
 > 应该从打包工具开始查找
+
+### `/dist`文件夹下八个文件的区别
+
+* 按照运行环境区分: 完整构建/运行时构建, 也就是是否可以使用`template`选项
+* 按照模块化规范: UMD/CommonJS/ESModule
+  * AMD: requireJS实现. 主要是异步加载模块. (偏向浏览器)
+  * COMMONJS: Node, 同步加载, 模块无需包装. (偏向服务器)
+  * UMD: AMD和COMMON的结合, (先判断是否执行export/Node), 再判断是否支持(define/AMD).
+* vue.common.js: 基于`common`的完整构建. `使用webpack打包时, 需要配置别名.`(**这就不太理解了**)
+  * 我又预感, 问题应该就出在webpack的配置中
+
+```json
+// webpack-1
+{
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.common.js'
+    }
+  }
+}
+```
+
+* vue.esm.js: 基于ESModule的完整构建. 使用webpack打包时, 也是需要配置
+* vue.js: 基于UMD的完整构建
+* vue.runtime.common.js: 基于common的运行时构建. 不支持template, .vue被解析成了render函数
+* vue.runtime.esm.js: 基于ESModule的运行时构建.
+* vue.runtime.js: 基于UMD的运行时构建.
+
+### 项目直接引用的vue, 引用的是vue.runtime.common.js吗. 为何可以使用ESModle
+
+* 先贴出vue的package.json
+
+```json
+{
+  // ...
+  "main": "dist/vue.runtime.common.js",
+  "module": "dist/vue.runtime.esm.js",
+  "unpkg": "dist/vue.js",
+  "jsdelivr": "dist/vue.js",
+  // ...
+}
+```
+
+* main: 是基于COMMONJS的. module: 是基于ES6的.
+* 因为使用ES6的话, 可以配置`uglifyjs-webpack-plugin`插件, 可以去除没有用到的函数.
+* 但是因为有些npm包不支持ES6, 比如有些node环境.
+* 这个时候, 会判断当前支持哪种环境, 然后选择不同的包.
+* **引入的时候, 不论包怎么导出都可用`import`引入. 但是导出的时候, 就会区分出来. 使用export/export default关键字, 还是module.exports/exports导出**
+
+> 结论, 我们的项目, 应该是引用了run.runtime.esm.js
+
+### webpack中配置别名
+
+* `baseConf.resolve.alias.vue = 'vue/dist/vue.common.js';`
+* 当我们解析vue / vue$ 的时候, 就会解析到指定的目录下面.
+
+## 查看webpack的打包导出机制
