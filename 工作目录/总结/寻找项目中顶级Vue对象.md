@@ -1,4 +1,6 @@
-# 寻找项目中顶级Vue对象
+# 寻找项目中顶级Vue对象 (一)
+
+> 个人博客首发博客园: [http://www.cnblogs.com/zhangrunhao/](http://www.cnblogs.com/zhangrunhao/)
 
 ## 参考
 
@@ -115,5 +117,3 @@
 
 * `baseConf.resolve.alias.vue = 'vue/dist/vue.common.js';`
 * 当我们解析vue / vue$ 的时候, 就会解析到指定的目录下面.
-
-## 查看webpack的打包导出机制
