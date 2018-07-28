@@ -13,7 +13,6 @@
 * [聊聊 package.json 文件中的 module 字段](https://loveky.github.io/2018/02/26/tree-shaking-and-pkg.module/)
 * [ES6模块 和 CommonJS 的区别](https://wmaqingbo.github.io/blog/2017/09/15/ES6%E6%A8%A1%E5%9D%97-%E5%92%8C-CommonJS-%E7%9A%84%E5%8C%BA%E5%88%AB/)
 
-
 ## 问题背景
 
 * 在调试Chrome的时候, 发现不能找到`vm`这个对象.
