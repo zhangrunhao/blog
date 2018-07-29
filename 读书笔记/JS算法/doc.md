@@ -108,3 +108,54 @@ console.dir(arr)
 ## 03栈
 
 > 后进先出, 也是编译器中保存遍历, 方法调用等的方式
+
+### 实现栈
+
+```js
+class Stack {
+  constructor () {
+    this.items = []
+  }
+  push(item) {
+    return this.items.push(item)
+  }
+  pop() {
+    return this.items.pop()
+  }
+  peek() {
+    return this.items[this.items.length - 1]
+  }
+  isEmpty() {
+    return this.items.length === 0
+  }
+  clear() {
+    return this.items = []
+  }
+  size() {
+    return this.items.length
+  }
+}
+```
+
+### 利用栈实现十进制转其他进制
+
+* 因为每一次取余后, 都是一次压栈操作, 放到最里面
+* 操作完成后, 是出栈操作, 也就是从最上面开始取
+
+```js
+function divideBy(num, base) {
+  var stack = new Stack, res = ''
+  while (num > 0) {
+    var rem = Math.floor(num % base)
+    stack.push(rem)
+    num = Math.floor(num / base)
+  }
+  while(!stack.isEmpty()) {
+    res += stack.pop()
+  }
+  return res
+}
+var num = 10
+console.log(divideBy(10, 8))
+console.log(num.toString(8))
+```

@@ -42,4 +42,3 @@ var arr = [1, 5, 4]
 
 var arr = [1,2,3]
 console.dir(arr.join())
-debugger;
