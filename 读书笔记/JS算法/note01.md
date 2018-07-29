@@ -1,4 +1,7 @@
-# 学习JavaScript数据结构与算法
+# 学习JavaScript数据结构与算法 (一)
+
+> * 学习JavaScript数据结构与算法 的笔记, 包含一二三章
+> * > 本人所有文章首发在博客园: [http://www.cnblogs.com/zhangrunhao/](http://www.cnblogs.com/zhangrunhao/)
 
 ## 01基础
 
@@ -141,6 +144,7 @@ class Stack {
 
 * 因为每一次取余后, 都是一次压栈操作, 放到最里面
 * 操作完成后, 是出栈操作, 也就是从最上面开始取
+* 按照顺序出栈, 拼接为字符串即可
 
 ```js
 function divideBy(num, base) {
