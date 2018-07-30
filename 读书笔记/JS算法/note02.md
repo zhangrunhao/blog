@@ -247,3 +247,22 @@ list.insert(1, 9)
 list.remove(10)
 var res = list.toString()
 ```
+
+### **单项链表反转**
+
+> 搞了两天, 也真是够了...
+
+```js
+  resver() {
+    var cur = this.head
+    var pre = null
+    var next = null
+    while (cur !== null) {
+      next = cur.next
+      cur.next = pre
+      pre = cur
+      cur = next
+    }
+    this.head = pre
+  }
+```

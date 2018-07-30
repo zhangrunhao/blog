@@ -1,3 +1,4 @@
+
 class Node {
   constructor(element) {
     this.element = element
@@ -62,16 +63,19 @@ class LinkDist {
     return this.head
   }
   resver() {
-    var cur = this.head
-    var pre = null
-    var next = null
-    while (cur !== null) {
-      next = cur.next
-      cur.next = pre
-      pre = cur
-      cur = next
+    if (this.length === 0) return
+    // var list = new LinkDist
+    // this是旧链表, list是新链表
+    var pre = null, cur = this.head, index = 0
+    while (index++ < this.length) {
+      if (index = 0) {
+        pre = cur
+        cur.next = null
+      } else {
+        cur.next = pre
+        cur = cur.next
+      }
     }
-    this.head = pre
   }
 }
 
@@ -139,11 +143,55 @@ function insert(position, element) {
 }
 
 var list = new LinkDist
-list.append('a')
-list.append('b')
-list.append('c')
-list.append('d')
+list.append(15)
+list.append(10)
+list.append(5)
+list.insert(1, 9)
+list.remove(10)
+list.toString()
 
 list.resver()
-debugger
 
+
+// 双向链表
+class doubleNode extends Node {
+  constructor () {
+    this.prev = null // 增加一个指向前一个元素的指针
+  }
+}
+class doubleLinkList extends LinkDist {
+  constructor () {
+    this.trail = null
+  }
+  insert(position, element) {
+    var node = new doubleNode(element)
+    var cur = this.head, previsous = null, index = 0
+    if (position === 0) { // 在第一个位置进行添加
+      if (!this.hend) { // 空的双向链表
+        this.head = node
+        this.trail = node
+      } else { // 有值
+        node.next = cur
+        cur.prev = node
+      }
+    } else if (position === this.length) { // 末尾
+      cur = this.trail
+      cur.next = node
+      node.prev = cur
+      node = this.trail
+    } else {
+      while(index++ < position) {
+        previsous = cur
+        cur = cur.next
+      }
+      nodex.next = cur
+      previsous.next = node
+
+      cur.prev = node
+      node.prev = previsous
+    }
+    this.length++
+    return true
+  }
+  return false
+}
