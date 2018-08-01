@@ -14,20 +14,14 @@
     <button @click="test">测试按钮</button>
   </div>
   <script>
-    var app = new Vue({
-      el: '#app',
-      methods: {
-        test: (() => {
-          `use strict`
-          console.log(this) // Window
-          var flag = true
-          return () => {
-            console.log(this) // Window
-            flag = false
-          }
-        })()
+    function fibona(n, n1 = 1, n2 = 1) {
+      debugger;
+      if (n <= 2) {
+        return n2
       }
-    })
+      return fibona(n - 1, n2, n1 + n2)
+    }
+    fibona(5)
   </script>
 </body>
 
