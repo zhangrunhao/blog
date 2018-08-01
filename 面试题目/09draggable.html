@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .dv {
+      width: 100px;
+      height: 100px;
+      background-color: aqua;
+    }
+
+    .target {
+      width: 200px;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      border: 1px solid gray;
+      color: red;
+      margin: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dv" id="dv" draggable="true"></div>
+  <!-- 如果有两个id, 只会匹配第一个 -->
+  <!-- <div id="dv"></div> -->
+  <div class="target"></div>
+  <script>
+    window.onload = function name() {
+      var dv = document.getElementById('dv')
+      var target = document.getElementsByClassName('target')[0]
+      dv.ondragstart = function (event) {
+        console.log('ondragstart')
+      }
+      dv.ondrag = function () {
+        console.log('ondrag')
+      }
+      dv.ondragend = function (event) {
+        console.log('ondragend')
+      }
+
+
+      target.ondragenter = function (event) {
+        event.preventDefault();
+      }
+      target.ondragover = function (event) {
+        event.preventDefault()
+      }
+      target.ondragleave = function (event) {
+        event.preventDefault()
+      }
+
+      target.ondrop = function (event) {
+        event.preventDefault()
+      }
+    }
+  </script>
+</body>
+
+</html>
