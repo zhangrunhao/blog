@@ -16,25 +16,65 @@
     flex-direction: row; 
     /* 是否换行 */
     flex-wrap: wrap;
-    /* 主轴对齐方式 */
+    /* 主轴对齐方式  : 在主轴上如何排列*/
     justify-content: space-between;
-    /* 交叉轴对齐方式 */
+    /* 交叉轴对齐方式 : 在副轴上如何排列*/
     align-items: flex-start;
 
+    /* 轴线的对齐方式: 如果只有一条轴线的话, 那么默认失效 */
+    /* 如果子元素没有高度, 默认值是stretch, 伸展 */
+    align-content: space-around;
   }
   .item {
+    width: 150px;
     text-align: center;
     background: skyblue;
     border: 2px solid pink;
+    
+    /* 当主轴为水平方式的时候, 才生效 */
+    /* 设置基本大小, width失效 */
+    flex-basis: 80px;
+    /* 若有剩余, 如何扩大: 1, 大家平分 */
+    /* 如果允许换行, 那么换行, 之后的元素, 会平分剩余空间 */
+    /* 在允许换行的时候, 如果不够了, 也会平分剩余的空间 */
+    flex-grow: 1;
+    /* 缩小比例, 需要nowrap, 其实也不是, 因为一般允许换行的情况下, 才能生效, 因为一般都换行了, 空间肯定是够的 */
+    flex-shrink: 1;
+
+  }
+  .item1 {
+    /* 排名越小越靠前 */
+    order: -1;
+    flex-grow: 5;
+    flex-shrink: 5;
+
+    /* 继承父元素的algin-items, 也可以设置自己的 */
+    /* 因为允许换行后, 每一行都等分了, 如果只有一行的话, 可以看出区别 */
+    align-self: flex-end;
+  }
+  .item2 {
+    order: -2;
   }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="item">1</div>
-    <div class="item">2</div>
+    <div class="item item1">1</div>
+    <div class="item item2">2</div>
     <div class="item">3</div>
     <div class="item">4</div>
+    <div class="item">5</div>
+    <div class="item">6</div>
+    <div class="item">7</div>
+    <div class="item">8</div>
+    <div class="item">9</div>
+    <div class="item">10</div>
+    <div class="item">11</div>
+    <div class="item">12</div>
+    <div class="item">13</div>
+    <div class="item">14</div>
+    <div class="item">15</div>
+    <div class="item">16</div>
   </div>
 </body>
 </html>
