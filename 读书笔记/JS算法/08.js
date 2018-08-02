@@ -114,15 +114,6 @@ function searchNode(node, key) {
   }
 }
 
-function remove(node, key) {
-  if (node === null) {
-    return null
-  }
-  if (key < node.key) {
-    
-  }
-}
-
 var tree = new BinarySearchTree
 
 tree.insert(10)
