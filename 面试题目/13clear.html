@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  .out {
+    background: #eee;
+    /* height: 200px; */
+    padding: 0 50px;
+  }
+  .out::after {
+    content: ' ';
+    clear: both;
+  }
+  .item {
+    width: 50px;
+    border: 2px red solid;
+    float: left;
+    position: relative;
+  }
+  .mid {
+    width: 100%;
+    background: skyblue;
+  }
+  .left {
+    margin-left: -100%;
+    left: -50px;
+    background: saddlebrown;
+  }
+  .right{
+    left: 50px;
+    margin-left: -58px;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="out">
+    <div class="item mid">1</div>
+    <div class="item left">2</div>
+    <div class="item right">3</div>
+  </div>
+</body>
+</html>

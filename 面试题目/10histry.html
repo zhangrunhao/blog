@@ -14,6 +14,7 @@
     window.onload = function () {
       var btn = document.getElementById('btn')
       btn.onclick = function () {
+        // 需要同源. 故直接打开失效
         window.history.pushState('www.baidu.com')
       }
     }

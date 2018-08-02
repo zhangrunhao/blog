@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>圣杯布局</title>
+  <style>
+    .outer {
+      /* 如果width 是100% 就继承了body的宽度, 会被撑出滚动条 */
+      /* height: 300px; */
+      background-color: aliceblue;
+      padding: 0 100px;
+    }
+    .outer::after {
+      visibility: hidden;
+      /* line-height: 0; */
+      display: block;
+      content: '0';
+      height: 0;
+      clear: both;
+    }
+    .mid, .left, .right {
+      float: left;
+      position: relative;
+    }
+    .mid {
+      width: 100%;
+      background: darksalmon;
+    }
+    .left, .right {
+      width: 100px;
+    }
+    .left {
+      /* 关键属性, 如果左外边距, 超过了我们所以盒子的边框, 就会浮动上去 */
+      /* 如果设置为100%, 就会完全浮动到最左边 */
+      margin-left: -100%;
+      /* 再向左移动本身的宽度, 可以展示出mid模块 */
+      left: -100px;
+      background: seagreen;
+    }
+    .right {
+      margin-left: -100px;
+      left: 100px;
+      background: indianred;
+    }
+  </style>
+</head>
+<body>
+  <div class="outer">
+    <div class="mid">mid</div>
+    <div class="left">left</div>
+    <div class="right">rihgt</div>
+  </div>
+</body>
+</html>
