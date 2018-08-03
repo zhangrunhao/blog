@@ -3,6 +3,7 @@ function quickArr(arr) {
   if (len < 2) {
     return arr
   }
+  debugger
   var temp = arr[0]
   var left = []
   var right = []
