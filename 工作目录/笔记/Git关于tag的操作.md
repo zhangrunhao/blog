@@ -22,3 +22,7 @@
 
 * `git tag -d [标签名称]` : 删除本地标签
 * `git push origin :refs/tags/[标签名称]` : 删除远程标签
+
+## 从指定tag切出分支
+
+* `git checkout tags/<tag_name> -b <branch_name>`
