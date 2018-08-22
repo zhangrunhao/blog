@@ -11,13 +11,13 @@ var intersect = function(nums1, nums2) {
               res.push(nums1[i])
               nums1.splice(i, 1)
               nums2.splice(j, 1)
+              i--
+              j--
           }
       }   
   }
   return res
 };
 
-var res = intersect([], [])
+var res = intersect([1,2,2,1], [2,2])
 debugger
-
-parseInt
