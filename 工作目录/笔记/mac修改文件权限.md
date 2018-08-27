@@ -4,16 +4,6 @@
 
 ### 具体命令: `sudo chmod -R 657 index.vue`
 
-### sudo
-
-### chmod
-
-### -R
-
-### 657
-
-### index.vue
-
 ## 更改文件所有者
 
 > 来源: [https://www.2cto.com/os/201406/309516.html](https://www.2cto.com/os/201406/309516.html)
