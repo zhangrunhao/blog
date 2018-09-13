@@ -129,3 +129,76 @@ function sameInputType(a, b) {
   const typeB = isDef(i = a.data) && isDef(i = i.attrs) && isDef(i = i.type) && i.type
   return typeA === typeB
 }
+
+/*
+patchVNode: 旧节点对比新节点, 进行操作
+当两个节点sameVNode相同时, 可以进行patchVNode操作, 
+*/
+
+function patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly) {
+  if (oldVnode, vnode) { // 两个节点完全相同的时候, 直接返回
+    return
+  }
+  /*
+  静态树上, 重复利用元素
+  注意: 如果这个元素是克隆过去的, 我们只能进行这个操作
+  如果新的节点不是克隆的, 那么他就意味使用hot-reload-api使用render函数重新生成的. 我们需要准备一个完全的再次渲染
+  */
+
+  /*
+  新旧节点是静态的, 并且key相同, 然后又一个是复制的, 或者是标记了once属性, 那么只需要替换, elm和componentInstance接口
+  那么: elm和componentInstance是什么呢.
+  */
+  if (
+    isTrue(vnode.isStatic) &&
+    isTrue(oldVnode.isStatic) &&
+    vnode.key === oldVnode.key &&
+    ( isTrue(vnode.cloned) || isTrue(oldVnode.cloned) )
+  ) {
+    vnode.elm = oldVnode.elm
+    vnode.componentInstance = oldVnode.componentInstance
+    return
+  }
+
+  let i
+  const data = vnode.data
+  if (isDef(data) && isDef(i = data.hook) && isDef(i = i.prepatch)) {
+    // i = vnode.data.hook.prepatch: 不知道这个方法做了些什么
+    i(oldVnode, vnode)
+  }
+  const elm = vnode.elm = oldVnode.elm
+  const oldCh = oldVnode.children
+  const ch = vnode.chrildren
+
+  if (isDef(data) && isPatchable(vnode)) { // 调用update回调 以及update钩子
+    for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode)
+    if (isDef(i = data.hook) && isDef(i = i.update)) i(oldVnode, vnode)
+  }
+
+  if (isUnDef(vnode.txt)) { // 这个节点没有txt文本
+    if (isDef(oldCh) && isDef(ch)) { // 新老节点都有children
+      // 对节点的ch进行diff操作
+      // updateChildren: 函数为diff操作的核心
+      if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly)
+    } else if (isDef(ch)) { // 老节点没有子元素, 只有新元素有
+      // 清空老元素的文本内容, 然后向当前节点插入内容
+      if (isDef(oldVnode.txt)) nodeOps.setTextConent(elm, '')
+      addVnode(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue)
+    } else if (isDef(oldCh)) { // 新节点没子元素, 老节点有
+      // 移除老元素的子节点
+      removeVnode(elm, oldCh, 0, oldCh.length - 1)
+    } else if (isDef(oldVnode.txt)) { // 都无子节点, 老节点有文本内容
+      // 直接移除文本内容
+      nodeOps.setTextConent()
+    }
+  } else if (oldVnode.txt !== vnode.txt) { // 新老节点的txt不同时, 直接替换文本内容
+    nodeOps.setTextConent(elm, vnode.txt) // 直接替换这段文本, 问题: nodeOps到底是什么?
+  }
+
+  // 调用postPatch钩子: 完全不知道这个是干什么的, patch发布完成吗?
+  if (isDef(data)) {
+    if (isDef(i = data.hook) && isDef(i = i.postpatch)) i(oldVnode, vnode)
+  }
+}
+
+
