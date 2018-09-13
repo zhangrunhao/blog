@@ -3,6 +3,8 @@
  * 核心是diff算法, 高效对比虚拟DOM的变更
  * 
  * diff算法是通过同层的树节点进行对比, 时间复杂度是O(n)
+ * 
+ * 代码逻辑: 只有当新老节点为同一个节点的时, 进行patchVNode
  */
 
 // createPathFunction的返回自, 一个path函数
@@ -99,4 +101,31 @@ return function path(oldVnode, vnode, hydrating, removeOnly, parentElm, reElm) {
   // 调用insert钩子, 插入dom
   invokeInserHook(vnode, insertedVnodeQueue, isInitialPath)
   return vnode.elm
+}
+
+/* 
+sameNode: 判断两个VNode是否为同一个节点, 需要满足条件:
+key相同
+tag(当前节点标签名)相同
+isComment(是否为注释点)相同
+是否data(当前节点对应的对象, 包含了一些具体的信息, 是一个VNodeData类型)都有定义
+当节点是input时, type必须相同
+*/
+
+function sanmeVnode(a, b) {
+  return (
+    a.key === b.key &&
+    a.tag === b.tag && 
+    a.isComment ==== b.isComment &&
+    isDef(a.data) === isDef(b.data) &&
+    sameInputType(a, b)
+  )
+}
+
+function sameInputType(a, b) {
+  if (a.tag !== 'input') return true
+  let i
+  const typeA = isDef(i = a.data) && isDef(i = i.attrs) && isDef(i = i.type) && i.type
+  const typeB = isDef(i = a.data) && isDef(i = i.attrs) && isDef(i = i.type) && i.type
+  return typeA === typeB
 }
