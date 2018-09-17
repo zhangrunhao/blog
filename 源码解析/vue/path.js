@@ -201,4 +201,101 @@ function patchVnode(oldVnode, vnode, insertedVnodeQueue, removeOnly) {
   }
 }
 
+function updateChildren(parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
+  // 开始索引
+  let oldStartIdx = 0
+  let newStartIdx = 0
 
+  // 结束索引
+  let oldEndIdx = oldCh.length - 1
+  let newEndIdx = newCh.length - 1
+
+  // 开始vnode和结束vnode
+  let oldStartVnode = oldCh[0]
+  let oldEndVnode = oldCh[oldEndIdx]
+  let newStartVnode = newCh[0]
+  let newEndVnode = newCh[newEndIdx]
+
+  // 还不知道这几个是做什么的
+  let oldKeyToIdx, idxInOld, elmToMove, refElm
+
+  // removeOnly是一个特殊的标记, 用来表示, 在transition-group中确定一个唯一的位置
+  // 在执行离开动画的时候, 为将要移除的元素, 确定一个移除的位置
+  // 翻译的还是这么烂啊...
+  const canMove = !removeOnly
+
+  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) { // 就是两条线进行比较的时候, 还没有重叠
+    if (isUndef(oldStartVnode)) { // 老元素的第一个元素没有定义
+      oldStartVnode = oldCh[++oldStartIdx] // 元素开始向左移动
+    } else if (isUndef(oldEndVnode)) { // 最后一个元素没有定义, 往前找
+      oldEndVnode = oldCh[++oldEndIdx]
+    } else if (sanmeVnode(oldStartVnode, newStartVnode)) {
+      // 四种情况, 第一个元素相同, patch走起
+      // 分别比较oldCh和newCh两头的节点, 分别有2*2=4中比较方法
+      patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue)
+      oldStartVnode = oldCh[++oldStartIdx]
+      newStartVnode = newCh[++newStartIdx]
+    } else if (sanmeVnode(oldEndVnode, newEndVnode)) {
+      patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue)
+      oldEndVnode = oldCh[--oldEndIdx]
+      newEndVnode = newCh[--newEndIdx]
+    } else if (sanmeVnode(oldStartVnode, newEndVnode)) {
+      patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue)
+      // 把第一个节点放到最后
+      canMove && nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm))
+      oldStartVnode = oldCh[++oldStartIdx]
+      newEndVnode = newCh[--newEndIdx]
+    } else if (sanmeVnode(oldEndVnode, newStartVnode)) {
+      patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue)
+      // 把第一个节点放到第一个
+      canMove && nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm)
+      oldEndVnode = oldCh[--oldEndIdx]
+      newStartVnode = newCh[++newStartIdx]
+    } else {
+      // 之前元素的的一个key的哈希表
+      // 比如childre是这样的 [{xx: xx, key: 'key0'}, {xx: xx, key: 'key1'}, {xx: xx, key: 'key2'}]  beginIdx = 0   endIdx = 2  
+      // 结果生成{key0: 0, key1: 1, key2: 2}
+      if (isUnDef(oldKeytoIdx)) oldKeytoIdx = createOldKeyToIdx(oldCh, oldStartIdx, oldEndIdx)
+      // 如果newStartVnode存在key, 并且这个key, 可以在老的key的哈希表中找到, 那么就返回这个元素, 否则为空
+      idxInOld = isDef(newStartVnode.key) ? oldKeyToIdx[newStartVnode.key] : null
+      if (isUndef(idxInOld)) {
+        // 没有key, 或者这个key在老节点中没有找到, 就新创建一个元素
+        createElm(newStartIdx, insertedVnodeQueue, parentElm, oldEndVnode.elm)
+        newStartVnode = newCh[++newStartIdx]
+      } else { // 找到了老的相同的key节点
+        // 获取老的需要移动的节点
+        elmToMove = oldCh[idxInOld]
+        if (process.env.NODE_ENV !== 'production' && !elmToMove) {
+          // 开发环境, 并且不存在可以移动的元素
+          // 如果elmToMove不存在说明之前已经有新节点放入过这个key的DOM中，提示可能存在重复的key，确保v-for的时候item有唯一的key值
+          warn('It seems there are duplice keys that is causing an update error' +
+            'Make sure each v-for item has unique key.'
+          )
+          if (sameVnode(elmToMove, newStartVnode)) {
+            // 如果得到的需要移动的元素, 和新的元素相同的, patchVnode
+            patchVnode(elmToMove, newStartVnode, insertedVnodeQueue)
+            // 老的节点已经进去patch, 老节点置为undefined
+            oldCh[idxInOld] = undefined
+            // 当表示可以移动的canMove时, 直接插入到第一个元素前面
+            canMove && nodeOps.insertBefore(parentElm, newStartVnode.elm, oldStartVnode.elm)
+            newStartVnode = newCh[++newStartIdx]
+          } else {
+            // 创建新的元素
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm)
+            newStartVnode = newCh[++newStartIdx]
+          }
+        }
+      }
+    }
+  }
+
+  // 循环结束后, 进行比较, 看看有没有没加上去的元素, 或者应该删掉的元素
+  if (oldStartIdx > oldEndIdx) { // 如果老节点遍历完成, 还有的话, 就应该添加了
+    refElm = isUnDef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm
+    // addVone就是批量创建createElm..
+    addVnode(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue)
+  } else if (newStartIdx > newEndIdx) { // 如果新节点, 没了, 就把老节点中的那些没遍历到的, 删掉
+    removeNode(parentElm, oldCh, oldStartIdx, newEndIdx)
+  }
+
+}
