@@ -297,5 +297,4 @@ function updateChildren(parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly)
   } else if (newStartIdx > newEndIdx) { // 如果新节点, 没了, 就把老节点中的那些没遍历到的, 删掉
     removeNode(parentElm, oldCh, oldStartIdx, newEndIdx)
   }
-
 }
