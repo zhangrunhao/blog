@@ -10,12 +10,13 @@
 
 <body>
   <div id="app">
-    {{ message }}
+    <div ref="test">
+      {{ message }}
+    </div>
     <button @click="btnClick">测试</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
-    debugger;
     var app = new Vue({
       el: '#app',
       data: {
@@ -23,8 +24,8 @@
       },
       methods: {
         btnClick() {
-          debugger;
-          this.message = 'clcik change'
+          this.message = 'end'
+          console.log(this.$refs.test.innerText)
         }
       }
     })
