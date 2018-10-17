@@ -6,3 +6,9 @@
 var strStr = function(haystack, needle) {
   return haystack.indexOf(needle)
 };
+
+
+var h = "askdjf"
+var n = ""
+var res = h.indexOf(n)
+debugger
