@@ -1,42 +1,84 @@
-function * gen() {
-  yield 1
-  console.log('thorwing an exception')
-  throw new Error('generator broke')
-  yield 2
-  yield 3
-}
 
-function log(generator) {
-  var v
-  console.log('starting generator')
+// function * numbers () {
+//   yield 1;
+//   try {
+//     yield 2;
+//     yield 3;
+//   } finally {
+//     yield 4
+//     yield 5
+//   }
+//   yield 6
+// }
 
-  try {
-    v = generator.next()
-    console.log('第一次运行next方法', v)
-  } catch (error) {
-    console.log('捕获错误', v)
-  }
+// var g = numbers()
+// var res
+// debugger
+// res = g.next()
+// debugger
+// res = g.next()
+// debugger
+// res = g.return(7) // 会继续执行finally里面的语句, 一直到执行完了, 才会跳出来
+// debugger
+// res = g.next()
+// debugger
+// res = g.next()
+// debugger
 
-  try {
-    v = generator.next() // 此时报错, 状态还是1, 还状态还没有更新, 也就还没有结束
-    // 抛出错误, 内部, 并没有捕获, 这个时候, 停止执行, 
-    // 外部捕获这个错误, 并且抛出
-    console.log('第二次运行next方法', v)
-  } catch (error) {
-    console.log('捕获错误', error)
-  }
 
-  try {
-    v = generator.next()
-    console.log('第三次运行next方法', v)
-  } catch (error) {
-    console.log('捕获错误', error)
-  }
+// function * gen() {
+//   yield 1
+//   yield 2
+//   yield 3
+// }
+// debugger
+// var g = gen()
+// var res = g.next()
+// res = g.return('foo')
+// res = g.next()
+// debugger
 
-  console.log('caller done')
-}
 
-log(gen())
+
+// function * gen() {
+//   yield 1
+//   console.log('thorwing an exception')
+//   throw new Error('generator broke')
+//   yield 2
+//   yield 3
+// }
+
+// function log(generator) {
+//   var v
+//   console.log('starting generator')
+
+//   try {
+//     v = generator.next()
+//     console.log('第一次运行next方法', v)
+//   } catch (error) {
+//     console.log('捕获错误', v)
+//   }
+
+//   try {
+//     v = generator.next() // 此时报错, 状态还是1, 还状态还没有更新, 也就还没有结束
+//     // 抛出错误, 内部, 并没有捕获, 这个时候, 停止执行, 
+//     // 外部捕获这个错误, 并且抛出
+//     console.log('第二次运行next方法', v)
+//   } catch (error) {
+//     console.log('捕获错误', error)
+//   }
+
+//   try {
+//     v = generator.next()
+//     console.log('第三次运行next方法', v)
+//   } catch (error) {
+//     console.log('捕获错误', error)
+//   }
+
+//   console.log('caller done')
+// }
+
+// log(gen())
 
 
 // function * foo() {
