@@ -1,4 +1,29 @@
 
+// const g = function *(x, y) {
+//   let reslut = yield x + y
+//   return reslut
+// }
+
+// const gen = g(1, 2)
+// debugger
+// var res = gen.next()
+
+// // res = gen.next()
+
+// // res = gen.next(1) // next 替换了yield
+// // let result = 1
+
+// // res = gen.throw(new Error('出错了'))
+// // let result = thorw(new Error('..'))
+
+// res = gen.return(2)
+// // let result = return 2
+// debugger
+
+
+
+
+
 // function * numbers () {
 //   yield 1;
 //   try {
