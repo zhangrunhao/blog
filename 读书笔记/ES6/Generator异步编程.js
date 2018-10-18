@@ -1,31 +1,94 @@
-function wrapper(generatorFunction) {
-  debugger
-  return function aaa (...args) {
-    debugger
-    let generatorObject = generatorFunction(...args)
-    generatorObject.next();
-    debugger
-    return generatorObject
-  }
+function * numbers() {
+  yield 1
+  yield 2
+  return 3
+  yield 4
 }
 
-
-const wrapped = wrapper(function *() {
-  console.log('start')
-  console.log(`First input: ${yield}`)
-  debugger
-  return 'DONE'
-})
-
+// 展运算符, Array.from(), 解构赋值, for of 内部调用的都是 遍历器 接口
+var res 
+res = [...numbers()]
+debugger
+res = Array.from(numbers())
+debugger
+let [x, y] = numbers()
+debugger
+for (let n of numbers()) {
+  console.log(n)
+}
 debugger
 
-var res = wrapped()
-debugger
-var r
-r = res.next('sss')
-debugger
-r = res.next('ss')
-debugger
+// 为原生object对象, 添加遍历接口
+// function * objectEntries() {
+//   let propKeys = Object.keys(this)
+//   for (let propKey of propKeys) {
+//     yield [propKey, this[propKey]]
+//   }
+// }
+
+// let jane = { first: 'Jane', last: 'Doe'}
+
+// jane[Symbol.iterator] = objectEntries
+
+// for (let [key, value] of jane) {
+//   console.log(`${key}: ${value}`)
+// }
+
+
+
+// function * fibonacci() {
+//   let [prev, curr] = [0, 1]
+//   for(;;) {
+//     yield curr;
+//     [prev, curr] = [curr, prev + curr]
+//   }
+// }
+
+// for (let n of fibonacci()) {
+//   if (n > 1000) break
+//   console.log(n)
+// }
+
+// function * foo() {
+//   yield 1;
+//   yield 2
+//   yield 3
+//   yield 4
+//   return 5
+// }
+
+// for (let val of foo()) {
+//   console.log(val)
+// }
+
+// function wrapper(generatorFunction) {
+//   debugger
+//   return function aaa (...args) {
+//     debugger
+//     let generatorObject = generatorFunction(...args)
+//     generatorObject.next();
+//     debugger
+//     return generatorObject
+//   }
+// }
+
+
+// const wrapped = wrapper(function *() {
+//   console.log('start')
+//   console.log(`First input: ${yield}`)
+//   debugger
+//   return 'DONE'
+// })
+
+// debugger
+
+// var res = wrapped()
+// debugger
+// var r
+// r = res.next('sss')
+// debugger
+// r = res.next('ss')
+// debugger
 
 // function * dataConsumer() {
 //   console.log('start')
