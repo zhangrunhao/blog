@@ -1,22 +1,162 @@
-function * numbers() {
+function * gen() {
   yield 1
+  console.log('thorwing an exception')
+  throw new Error('generator broke')
   yield 2
-  return 3
-  yield 4
+  yield 3
 }
 
-// 展运算符, Array.from(), 解构赋值, for of 内部调用的都是 遍历器 接口
-var res 
-res = [...numbers()]
-debugger
-res = Array.from(numbers())
-debugger
-let [x, y] = numbers()
-debugger
-for (let n of numbers()) {
-  console.log(n)
+function log(generator) {
+  var v
+  console.log('starting generator')
+
+  try {
+    v = generator.next()
+    console.log('第一次运行next方法', v)
+  } catch (error) {
+    console.log('捕获错误', v)
+  }
+
+  try {
+    v = generator.next() // 此时报错, 状态还是1, 还状态还没有更新, 也就还没有结束
+    // 抛出错误, 内部, 并没有捕获, 这个时候, 停止执行, 
+    // 外部捕获这个错误, 并且抛出
+    console.log('第二次运行next方法', v)
+  } catch (error) {
+    console.log('捕获错误', error)
+  }
+
+  try {
+    v = generator.next()
+    console.log('第三次运行next方法', v)
+  } catch (error) {
+    console.log('捕获错误', error)
+  }
+
+  console.log('caller done')
 }
-debugger
+
+log(gen())
+
+
+// function * foo() {
+//   var x = yield 3
+//   var y = x.toUpperCase()
+//   yield y
+// }
+
+// var it = foo()
+
+// it.next()
+
+// try {
+//   it.next(42)
+// } catch (error) {
+//   console.log(error)
+// }
+
+
+
+// // throw 与个g.throw无关
+// var gen = function * gen() {
+//   yield console.log('hello')
+//   yield console.log('world')
+// }
+
+// var g = gen()
+// g.next()
+
+// try {
+//   throw new Error()
+// } catch (error) {
+//   g.next()
+// }
+
+// var gen = function * gen() {
+//   try {
+//     yield console.log('a');
+//   } catch (error) {
+//     console.log('内部捕获', error)
+//   }
+//   yield console.log('b')
+//   yield console.log('c')
+// }
+// debugger
+// var g = gen()
+// g.next()
+// g.throw() // thow被捕获之后, 又自动执行了一遍next
+
+// // 只用函数体内部部署了trycatch, throw后, 还是可以继续执行next的
+// g.next()
+// g.throw('a') // 捕获一次, 就不能再捕获了
+
+
+// var g = function * () {
+//   debugger
+//   while(true) {
+//     yield
+//     // try {
+//     //   yield
+//     // } catch (e) {
+//     //   debugger
+//     //   if (e != 'a') throw e
+//     //   console.log('内部捕获', e)
+//     // }
+//   }
+// }
+
+// var i = g()
+// debugger
+// i.next()
+// try {
+//   // throw new Error('a')
+//   // throw new Error('b')
+//   i.throw('a')
+//   i.throw('b')
+// } catch (error) {
+//   console.log('外部捕获', error)
+// }
+
+// var g = function * () {
+//   try {
+//     yield
+//   } catch (error) {
+//     console.log('内部捕获', error)
+//   }
+// }
+
+// debugger
+// var i = g()
+// i.next()
+// i.throw(new Error('出错了'))
+// try {
+//   i.throw('a') // 被函数体内部捕获, 直接抛出了
+//   i.throw('b') // 函数体内部已经捕获过错误了, 所以不会再不会, 抛出了
+//   i.throw('c') // 这个错误, 就捕获不到了
+// } catch (error) {
+//   console.log('外部捕获', error)
+// }
+
+
+// function * numbers() {
+//   yield 1
+//   yield 2
+//   return 3
+//   yield 4
+// }
+
+// // 展运算符, Array.from(), 解构赋值, for of 内部调用的都是 遍历器 接口
+// var res 
+// res = [...numbers()]
+// debugger
+// res = Array.from(numbers())
+// debugger
+// let [x, y] = numbers()
+// debugger
+// for (let n of numbers()) {
+//   console.log(n)
+// }
+// debugger
 
 // 为原生object对象, 添加遍历接口
 // function * objectEntries() {
