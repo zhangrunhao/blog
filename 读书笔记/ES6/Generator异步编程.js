@@ -1,13 +1,75 @@
-
-let obj = {
-  * myGenetatorMethod() {
-    yield 1
-  }
+function * gen(x) {
+  this.a = x
+  yield this.b = 2
+  yield this.c = 3
 }
 
-var g = obj.myGenetatorMethod()
-var res = g.next()
+function F(...args) {
+  return gen.call(gen.prototype, ...args)
+}
+var f = F(1)
+var res
 debugger
+res = f.next()
+res = f.a
+
+
+
+// function * F() {
+//   this.a = 1
+//   yield this.b = 2
+//   yield this.c = 3
+// }
+
+// debugger
+// var f = F.call(F.prototype)
+// var f1 = F.call(F.prototype)
+// var res
+// res = f.next()
+// res = f.next()
+// res = f.next()
+// f.a = 'aaa' // 给f这个实例添加一个, 但是原型链上面的没有改
+// console.log(F.prototype)
+// res = f.a
+// res = f.b
+// res = f.c
+// debugger
+
+
+// function * g() {
+//   this.a = 11
+// }
+
+// let obj = g()
+// var res = obj.next()
+// var a = obj.a // 没有这个属性
+// debugger
+
+
+
+// function * g() {}
+
+// g.prototype.hello = function () {
+//   return 'hi'```
+// }
+// let obj = g() // 返回的是遍历器对象
+
+// var res = obj instanceof g
+// // obj 的 __proto__ 指向了 g 的prototype
+// // 但是不能把g当做构造函数, 因为返回的不是this, 而是遍历器对象
+// debugger
+
+
+
+// let obj = {
+//   * myGenetatorMethod() {
+//     yield 1
+//   }
+// }
+
+// var g = obj.myGenetatorMethod()
+// var res = g.next()
+// debugger
 
 
 
