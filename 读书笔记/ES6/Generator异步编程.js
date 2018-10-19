@@ -1,37 +1,50 @@
- function Tree(left, label, right) {
-   this.left = left
-   this.label = label
-   this.right = right
- }
 
- // 中序遍历函数
- function * inorder(t) {
-   if (t) {
-     yield * inorder(t.left)
-     yield t.label
-     yield * inorder(t.right)
-   }
- }
+let obj = {
+  * myGenetatorMethod() {
+    yield 1
+  }
+}
 
- // 生成二叉树
- function make(array) {
-   // 判断是否为叶子节点
-   if (array.length === 1) {
-     return new Tree(null, array[0], null)
-   } else {
-     return new Tree(make(array[0]), array[1], make(array[2]))
-   }
- }
-
- let tree = make([[['a'], 'b', ['c']], 'd', [['e'], 'f', ['g']]]);
+var g = obj.myGenetatorMethod()
+var res = g.next()
 debugger
- var result = []
+
+
+
+//  function Tree(left, label, right) {
+//    this.left = left
+//    this.label = label
+//    this.right = right
+//  }
+
+//  // 中序遍历函数
+//  function * inorder(t) {
+//    if (t) {
+//      yield * inorder(t.left)
+//      yield t.label
+//      yield * inorder(t.right)
+//    }
+//  }
+
+//  // 生成二叉树
+//  function make(array) {
+//    // 判断是否为叶子节点
+//    if (array.length === 1) {
+//      return new Tree(null, array[0], null)
+//    } else {
+//      return new Tree(make(array[0]), array[1], make(array[2]))
+//    }
+//  }
+
+//  let tree = make([[['a'], 'b', ['c']], 'd', [['e'], 'f', ['g']]]);
+// debugger
+//  var result = []
  
- for (let node of inorder(tree)) {
-   result.push(node)
- }
- console.log(result)
- debugger
+//  for (let node of inorder(tree)) {
+//    result.push(node)
+//  }
+//  console.log(result)
+//  debugger
 
  // yield * iterTree(tree) {
  //   if (Array.isArray(tree)) {
