@@ -1,14 +1,68 @@
-function * gen() {
-  yield 1
-  return 2
+function * numbers() {
+  let file = new FileReader('numbers. txt')
+  try {
+    while (!file.eof) {
+      yield parseInt(file.readLine(), 10)
+    }
+  } finally {
+    file.close()
+  }
 }
 
-let g = gen()
-console.log(
-  g.next().value, // 此处执行完成之后, 保存的上下执行空间
-  g.next().value, // 此处吊起的话, 再次开始执行
-)
-debugger
+
+// function * main() {
+//   debugger
+//   var result = yield request('http://some.url')
+//   debugger
+//   var resp = JSON.parse(result)
+//   debugger
+//   console.log(resp.value)
+//   debugger
+// }
+
+// function request(url) {
+//   debugger
+//   makeAjaxCall(url, function (resp) {
+//     debugger
+//     // 这里就通过next传参的方式, 给yield返回了我们需要的结果值
+//     it.next(resp)
+//   })
+// }
+
+// var it = main()
+// debugger
+// it.next()
+// debugger
+
+
+// function * loadUI() {
+//   showLoadingScreen()
+//   yield loadUIDataAsynchronously()
+//   hideLoadingScreen()
+// }
+
+// // 第一次调用返回一个遍历器
+// var gen = loadUI()
+// // 第一次调用next, 显示loading, 并且开始异步加载数据
+// // 加载UI
+// gen.next()
+// // 数据加载完成后, 再次调用一次next方法, 关闭loading
+// // 卸载UI
+// gen.next()
+// // 问题在于: 如何知道数据加载完成
+
+
+// function * gen() {
+//   yield 1
+//   return 2
+// }
+
+// let g = gen()
+// console.log(
+//   g.next().value, // 此处执行完成之后, 保存的上下执行空间
+//   g.next().value, // 此处吊起的话, 再次开始执行
+// )
+// debugger
 
 
 // 状态机
