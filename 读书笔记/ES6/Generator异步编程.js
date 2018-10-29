@@ -1,17 +1,30 @@
-function * gen(x) {
-  this.a = x
-  yield this.b = 2
-  yield this.c = 3
+// 状态机
+var ticking = true
+var clock = function () {
+  if (ticking) {
+    console.log('Tick!')
+  } else {
+    console.log('Tock')
+  }
+  ticking = !ticking
 }
 
-function F(...args) {
-  return gen.call(gen.prototype, ...args)
-}
-var f = F(1)
-var res
-debugger
-res = f.next()
-res = f.a
+
+
+// function * gen(x) {
+//   this.a = x
+//   yield this.b = 2
+//   yield this.c = 3
+// }
+
+// function F(...args) {
+//   return gen.call(gen.prototype, ...args)
+// }
+// var f = F(1)
+// var res
+// debugger
+// res = f.next()
+// res = f.a
 
 
 
