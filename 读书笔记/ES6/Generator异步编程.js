@@ -1,13 +1,26 @@
-// 状态机
-var ticking = true
-var clock = function () {
-  if (ticking) {
-    console.log('Tick!')
-  } else {
-    console.log('Tock')
-  }
-  ticking = !ticking
+function * gen() {
+  yield 1
+  return 2
 }
+
+let g = gen()
+console.log(
+  g.next().value, // 此处执行完成之后, 保存的上下执行空间
+  g.next().value, // 此处吊起的话, 再次开始执行
+)
+debugger
+
+
+// 状态机
+// var ticking = true
+// var clock = function () {
+//   if (ticking) {
+//     console.log('Tick!')
+//   } else {
+//     console.log('Tock')
+//   }
+//   ticking = !ticking
+// }
 
 
 
