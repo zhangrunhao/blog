@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+function *  gen() {
+  var a = 'a'
+  yield 1
+  yield 2
+  debugger
+  var b = 'b'
+  debugger
+  yield 3
+  return 4
+}
+
+function func(a) {
+  debugger
+  // func1()
+  return 'a'
+}
+
+function func1(b) {
+  debugger
+  return 'b'
+}
+
+var g = gen()
+g.next()
+debugger
+func()
+debugger
+g.next()
+debugger
+g.next()
+debugger
+  </script>
+</body>
+
+</html>
