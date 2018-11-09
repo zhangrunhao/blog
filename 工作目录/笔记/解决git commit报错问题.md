@@ -17,3 +17,11 @@ error: Error building trees
 1. `sudo chown -R cygr-0101-01-0133 *`
 2. `cd .git`
 3. `sudo chown -R cygr-0101-01-0133 *`
+
+## 核心原因
+
+> [https://stackoverflow.com/questions/28832815/git-commands-require-sudo-on-osx](stackoverflow)
+
+### 解决办法
+
+* `chown -R <user> myproject`
