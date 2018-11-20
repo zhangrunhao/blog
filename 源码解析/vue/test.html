@@ -11,22 +11,40 @@
 <body>
   <div id="app">
     <div ref="test">
-      {{ message }}
+      {{ obj.aaa }}
+      <component-a :test="count" :childObj="obj"></component-a>
     </div>
-    <button @click="btnClick">测试</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
+    var ComponentA = {
+      props: {
+        childObj: {
+          type: Object,
+          default: () => {
+            return {}
+          }
+        },
+        test: Number,
+      },
+      mounted() {
+        console.log(this.childObj)
+        console.log(this.test)
+        debugger
+      },
+      template: `<div><div>test:{{test}}</div></div>`
+    }
+   
     var app = new Vue({
       el: '#app',
       data: {
-        message: 'Hello Vue!'
+        obj: {
+          aaa: 'this is name'
+        },
+        count: 0
       },
-      methods: {
-        btnClick() {
-          this.message = 'end'
-          console.log(this.$refs.test.innerText)
-        }
+      components: {
+        'component-a': ComponentA,
       }
     })
   </script>
