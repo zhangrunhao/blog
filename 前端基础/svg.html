@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    circle {
+      stroke-width: 5;
+      stroke: #f00;
+      fill: #ff0;
+    }
+
+    circle:hover {
+      stroke: #090;
+      fill: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="svg-container">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" width="500"
+      height="440">
+      <!-- svg code -->
+    </svg>
+  </div>
+  <script>
+    var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
+      console.log(svgString)
+  </script>
+</body>
+
+</html>
