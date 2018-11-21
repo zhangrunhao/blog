@@ -2,7 +2,8 @@
 
 ## flutter相关
 
-* flutter doctor
+* 检查环境: flutter doctor
+* 更新依赖: flutter packages get
 
 ## 虚拟机相关
 
