@@ -1,5 +1,10 @@
+// 引入dart提供的方法
 import 'dart:async';
-import 'dart:math';
+
+// 引入外部包
+// import 'package:angular2/angular2.dart';
+// 直接引入某个路径
+// import 'path/to/my_path/test.dart';
 
 // 变量声明
 var name = "this is name";
@@ -61,18 +66,22 @@ int fibonacci (int n) {
  * 
  */
 
+testAsync () async {
+  try {
+    String result = await getAJoke();
+    print(result);
+  } catch (e) {
+    print('Error');
+  }
+}
+
 void main() async {
   // testVariables();
   // controlFlowStatements();
   // var result = fibonacci(20);
   // print(result);
   // flybyObjects.where((name) => name.contains('d')).forEach(print);
-  try {
-    String result = await getAJoke();
-    print(result);
-  } catch(e) {
-    print(e);
-  }
+  await testAsync();
   print('Another print statement');
   return;
 }
