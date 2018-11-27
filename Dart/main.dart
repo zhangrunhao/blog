@@ -4,7 +4,7 @@
 var name = "this is name";
 var year = 1997;
 var antennaDiameter = 3.7;
-var flybyObjects = ['aaa', 'bbb', 'ccc', 'dddd'];
+var flybyObjects = ['aaa', 'bbbd', 'ccc', 'dddd'];
 var image = {
   'tags': ['tag1', 'tag2'],
   'url': '//path/to/aaa.jpg',
@@ -50,7 +50,8 @@ int fibonacci (int n) {
 void main() {
   // testVariables();
   // controlFlowStatements();
-  var result = fibonacci(20);
-  print(result);
+  // var result = fibonacci(20);
+  // print(result);
+  flybyObjects.where((name) => name.contains('d')).forEach(print);
   return;
 }
