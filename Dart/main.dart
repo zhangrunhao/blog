@@ -9,16 +9,17 @@ var image = {
   'tags': ['tag1', 'tag2'],
   'url': '//path/to/aaa.jpg',
 };
+int testVariables() {
+  print(name);
+  print(year);
+  print(antennaDiameter);
+  print(flybyObjects);
+  print(image);
+}
 
 
 
-void main() {
-  // print(name);
-  // print(year);
-  // print(antennaDiameter);
-  // print(flybyObjects);
-  // print(image);
-
+int controlFlowStatements() {
   if (year >= 2001) {
     print('21st century');
   } else if (year >= 1901) {
@@ -37,5 +38,19 @@ void main() {
     print(year);
     year += 1;
   }
+}
 
+// 函数
+int fibonacci (int n) {
+  if (n == 0 || n == 1) return n;
+  return fibonacci(n-1) + fibonacci(n-2);
+}
+
+
+void main() {
+  // testVariables();
+  // controlFlowStatements();
+  var result = fibonacci(20);
+  print(result);
+  return;
 }
