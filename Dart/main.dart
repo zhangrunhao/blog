@@ -1,4 +1,5 @@
-
+import 'dart:async';
+import 'dart:math';
 
 // 变量声明
 var name = "this is name";
@@ -9,6 +10,7 @@ var image = {
   'tags': ['tag1', 'tag2'],
   'url': '//path/to/aaa.jpg',
 };
+
 int testVariables() {
   print(name);
   print(year);
@@ -17,7 +19,12 @@ int testVariables() {
   print(image);
 }
 
-
+Future getAJoke() {
+  return new Future.delayed(new Duration(milliseconds: 2000), () {
+    // throw new Exception('No joke for you ');
+    return 'this is a joke';
+  });
+}
 
 int controlFlowStatements() {
   if (year >= 2001) {
@@ -45,13 +52,27 @@ int fibonacci (int n) {
   if (n == 0 || n == 1) return n;
   return fibonacci(n-1) + fibonacci(n-2);
 }
+// 普通注释
+/// 文档注释? 还有这种货?
+/// 嘿, 一回车, 还挺方便的
+/**
+ * 还是习惯这种多行注释
+ * 
+ * 
+ */
 
-
-void main() {
+void main() async {
   // testVariables();
   // controlFlowStatements();
   // var result = fibonacci(20);
   // print(result);
-  flybyObjects.where((name) => name.contains('d')).forEach(print);
+  // flybyObjects.where((name) => name.contains('d')).forEach(print);
+  try {
+    String result = await getAJoke();
+    print(result);
+  } catch(e) {
+    print(e);
+  }
+  print('Another print statement');
   return;
 }
