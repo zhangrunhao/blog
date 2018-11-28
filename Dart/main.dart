@@ -81,6 +81,8 @@ void main() async {
   // var result = fibonacci(20);
   // print(result);
   // flybyObjects.where((name) => name.contains('d')).forEach(print);
+  // 如果这里不加await, 会先执行下面的, 再去执行定时器
+  // 不太清楚触发机制
   await testAsync();
   print('Another print statement');
   return;
