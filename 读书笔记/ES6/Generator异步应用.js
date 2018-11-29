@@ -1,5 +1,20 @@
-// const fs = require('fs')
+// var thunkify = require('thunkify')
+// function f(a, b, callback) {
+//   var sum = a + b
+//   callback(sum)
+//   callback(sum)
+// }
 
+// var ft = thunkify(f)
+// ft(1, 2)(console.log)
+
+// const thunkify = {
+//   name: '111'
+// }
+// thunkify.name = 2
+
+// console.log(thunkify.name)
+// // const fs = require('fs')
 // var Thunk = function (fn) {
 //   return function () {
 //     var args = Array.prototype.slice.call(arguments)
@@ -46,22 +61,20 @@
 //   console.log(this)
 //   debugger
 // })
+// const Thunk = function (fn) {
+//   return function (...args) {
+//     return function (callback) {
+//       return fn.call(this, ...args, callback)
+//     }
+//   }
+// }
 
+// function f(a, cb) {
+//   cb(a)
+// }
 
-const Thunk = function (fn) {
-  return function (...args) {
-    return function (callback) {
-      return fn.call(this, ...args, callback)
-    }
-  }
-}
-
-function f(a, cb) {
-  cb(a)
-}
-
-const ft = Thunk(f)
-ft(1)(console.log)
+// const ft = Thunk(f)
+// ft(1)(console.log)
 
 
 // thunk函数, 
