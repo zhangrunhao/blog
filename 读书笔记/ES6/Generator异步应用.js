@@ -1,3 +1,80 @@
+// const fs = require('fs')
+
+// var Thunk = function (fn) {
+//   return function () {
+//     var args = Array.prototype.slice.call(arguments)
+//     return function (callback) {
+//       args.push(callback)
+//       // 这里的this指的就是, 在我们传入callback函数的时候, 谁来调用的, 
+//       // 就是外边的那个, fileAReadFileCallback(callback)
+//       console.log(this)
+//       return fn.apply(this, args)
+//     }
+//   }
+// }
+
+// // 这一步返回第二行的那个函数, 也就是需要传参的函数.
+// // 这个会把参数都截取下来, 也是我们的readFileThunk函数, 这个函数可以截取参数, 返回一个需要传入callback的函数
+// var readFileThunk = Thunk(fs.readFile)
+// debugger
+// // 就是这个, 这里返回了一个需要传入callback的函数, fileAReadFileCallback 这么一个函数
+// // 这里就把需要传入的参数都传进去了
+// var fileAReadFileCallback = readFileThunk('path/fileA')
+// // fileAReadFileCallback(() => {
+// //   // 原本这里的this, 要指向当前上下文的, 也就是, ReadFileContext
+// //   // 因为是箭头函数, 所以指向了一个空对象, 不然应该是全局对象
+// //   // 我也不太懂了..
+// //   console.log(this)
+// //   debugger
+// //   // 需要处理的事情...
+// //   // 这里传入callback, 就会传入到最后那个函数, 然后就会执行一个我们本来的fs.readFile这个函数, 通过this调用
+// //   // 这里的this, 是指什么呢
+// // })
+// // fileAReadFileCallback(function () {
+// //   // 这里就指向了ReadFileContext
+// //   console.log(this)
+// //   debugger
+// // })
+
+// fs.readFile('path/fileA', () => {
+//   console.log(this) // 空对象, 应该是初始化的时候, 向上找没找到的原因
+//   debugger
+// })
+
+// fs.readFile('a.a', function () {
+//   // 这里的this就不会改变. 上次知乎真是尴尬, 麻蛋
+//   console.log(this)
+//   debugger
+// })
+
+
+const Thunk = function (fn) {
+  return function (...args) {
+    return function (callback) {
+      return fn.call(this, ...args, callback)
+    }
+  }
+}
+
+function f(a, cb) {
+  cb(a)
+}
+
+const ft = Thunk(f)
+ft(1)(console.log)
+
+
+// thunk函数, 
+// fs.readFile(fileName, callback)
+
+// var Thunk = function (fileName) {
+//   return function (callback) {
+//     return fs.readFile(fileName, callback)
+//   }
+// }
+
+// var readFileThunk = Thunk(fileName)
+// readFileThunk(callback)
 
 // function *  gen() {
 //   var a = 'a'
@@ -60,16 +137,7 @@
 // res()
 
 // debugger
-// fs.readFile(fileName, callback)
 
-// var Thunk = function (fileName) {
-//   return function (callback) {
-//     return fs.readFile(fileName, callback)
-//   }
-// }
-
-// var readFileThunk = Thunk(fileName)
-// readFileThunk(callback)
 
 // function f(m) {
 //   return m * 2
