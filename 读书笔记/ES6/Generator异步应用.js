@@ -1,3 +1,34 @@
+
+var fs = require('fs')
+var path = require('path')
+
+let filePath1 = path.join(__dirname, './test1.txt')
+let filePath2 = path.join(__dirname, './test2.txt')
+
+
+var thunkify = require('thunkify')
+var readFileThunk = thunkify(fs.readFile)
+
+var gen = function * () {
+  var r1 = yield readFileThunk(filePath1)
+  console.log(r1.toString())
+  var r2 = yield readFileThunk(filePath2)
+  console.log(r2.toString())
+}
+
+// g 就是表示Generator函数的内部指针.
+// next 负责将指针移动到下一步, 并返回该步的信息
+
+var g = gen()
+var r1 = g.next()
+r1.value(function (err, data) {
+  if (err) throw err
+  var r2 = g.next(data)
+  r2.value(function (err, data) {
+    g.next(data)
+  })
+})
+
 // var thunkify = require('thunkify')
 // function f(a, b, callback) {
 //   var sum = a + b
