@@ -4,9 +4,11 @@ var path = require('path')
 
 let filePath1 = path.join(__dirname, './test1.txt')
 let filePath2 = path.join(__dirname, './test2.txt')
+let filePath3 = path.join(__dirname, './test3.txt')
 
 
 var thunkify = require('thunkify')
+// 通过这个函数包装之后, 那么只需要传入回调函数, 就可以自动执行了
 var readFileThunk = thunkify(fs.readFile)
 
 var gen = function * () {
@@ -14,20 +16,35 @@ var gen = function * () {
   console.log(r1.toString())
   var r2 = yield readFileThunk(filePath2)
   console.log(r2.toString())
+  var r3 = yield readFileThunk(filePath3)
+  console.log(r3.toString())
 }
+
+// 通过回调函数不断接收和交出程序的执行权
+function run(fn) {
+  var gen = fn()
+  function step(err, data) {
+    var result = gen.next(data)
+    if (result.done) return
+    result.value(step)
+  }
+  step()
+}
+
+run(gen)
 
 // g 就是表示Generator函数的内部指针.
 // next 负责将指针移动到下一步, 并返回该步的信息
+// var g = gen()
+// var r1 = g.next()
+// r1.value(function (err, data) {
+//   if (err) throw err
+//   var r2 = g.next(data)
+//   r2.value(function (err, data) {
+//     g.next(data)
+//   })
+// })
 
-var g = gen()
-var r1 = g.next()
-r1.value(function (err, data) {
-  if (err) throw err
-  var r2 = g.next(data)
-  r2.value(function (err, data) {
-    g.next(data)
-  })
-})
 
 // var thunkify = require('thunkify')
 // function f(a, b, callback) {
