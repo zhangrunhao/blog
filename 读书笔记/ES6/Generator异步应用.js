@@ -1,4 +1,3 @@
-
 var fs = require('fs')
 var path = require('path')
 
@@ -6,32 +5,74 @@ let filePath1 = path.join(__dirname, './test1.txt')
 let filePath2 = path.join(__dirname, './test2.txt')
 let filePath3 = path.join(__dirname, './test3.txt')
 
-
-var thunkify = require('thunkify')
-// 通过这个函数包装之后, 那么只需要传入回调函数, 就可以自动执行了
-var readFileThunk = thunkify(fs.readFile)
-
-var gen = function * () {
-  var r1 = yield readFileThunk(filePath1)
-  console.log(r1.toString())
-  var r2 = yield readFileThunk(filePath2)
-  console.log(r2.toString())
-  var r3 = yield readFileThunk(filePath3)
-  console.log(r3.toString())
+var readFile = function (fileName) {
+  return new Promise(function (reslove, reject) {
+    fs.readFile(fileName, function (err, data) {
+      if (err) return reject(err)
+      reslove(data)
+    })
+  })
 }
 
-// 通过回调函数不断接收和交出程序的执行权
-function run(fn) {
-  var gen = fn()
-  function step(err, data) {
-    var result = gen.next(data)
+var gen = function * () {
+  var r1 = yield readFile(filePath1)
+  var r2 = yield readFile(filePath2)
+  console.log(r1.toString())
+  console.log(r2.toString())
+}
+
+// var g = gen()
+// g.next().value.then(function (data) {
+//   g.next(data).value.then(function (data) {
+//     g.next(data)
+//   })
+// })
+
+function run(gen) {
+  var g = gen()
+  function step(data) {
+    var result = g.next(data)
     if (result.done) return
-    result.value(step)
+    result.value.then(step)
   }
   step()
 }
 
+// function run(gen) {
+//   var g = gen()
+//   function step(data) {
+//     var result = g.next(data)
+//     if (result.done) return result.value
+//     result.value.then(function (data) {
+//       step(data)
+//     })
+//   }
+//   step()
+// }
+
 run(gen)
+
+
+
+
+
+// var thunkify = require('thunkify')
+// // 通过这个函数包装之后, 那么只需要传入回调函数, 就可以自动执行了
+// var readFileThunk = thunkify(fs.readFile)
+
+
+// // 通过回调函数不断接收和交出程序的执行权
+// function run(fn) {
+//   var gen = fn()
+//   function step(err, data) {
+//     var result = gen.next(data)
+//     if (result.done) return
+//     result.value(step)
+//   }
+//   step()
+// }
+
+// run(gen)
 
 // g 就是表示Generator函数的内部指针.
 // next 负责将指针移动到下一步, 并返回该步的信息
