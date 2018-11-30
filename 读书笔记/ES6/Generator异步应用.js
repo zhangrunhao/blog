@@ -21,22 +21,69 @@ var gen = function * () {
   console.log(r2.toString())
 }
 
+
+function co(gen) { // 接受generator为参数, 返回一个promise对象
+  var ctx = this;
+
+  return new Promise(function (reslove, reject) {
+    // 判断gen是不是函数. 
+    // 如果是的话, 就执行这个函数, 
+    // 如果不是, 就把promise的状态改为resloved, 更改的方式就是执行reslove
+    if (typeof gen === 'function') gen = gen.call(ctx)
+    if (!gen || typeof gen.next !== 'function') return reslove(gen)
+
+    onFulfilled()
+    // 将next函数, 包含在了onFulfilled函数中, 捕获抛出的错误
+    function onFulfilled(res) {
+      var ret;
+      try {
+        ret = gen.next(res)
+      } catch (error) {
+        return reject(error)
+      }
+      next(ret)
+    }
+
+    // 关键函数, next函数, 通过onFulfilled函数不断调用next.
+    function next(ret) {
+      // 检车generator函数是否执行结束
+      if (ret.done) return reslove(ret.value)
+      // 确保每一步的值是promise
+      var value = toPromise.call(ctx, ret.value)
+      // 使用onFulfilled函数再次调用next函数
+      if (value && isPromise(value)) return value.then(onFulfilled, onRejected)
+
+      // 在参数不符合的情况下, 更改状态为rejected, 终止执行
+      return onRejected(
+        new TypeError('yield只能是function, promise, generator, array, object, 你用的(ret.value)这个不行')
+      )
+    }
+
+  })
+}
+
+// 在co模块内部, 可以在yeild后面直接写一个数组或者一个对象, 都可以通过yield, 来进行异步加载.
+// 其实js中正真正的异步, 就是多个promise同时执行, 然后, 然后一个promise.all, 就是异步的最好体现.
+// promise, 就是回调函数再次封装
+
+
+
 // var g = gen()
 // g.next().value.then(function (data) {
 //   g.next(data).value.then(function (data) {
 //     g.next(data)
 //   })
 // })
+// function run(gen) {
+//   var g = gen()
+//   function step(data) {
+//     var result = g.next(data)
+//     if (result.done) return
+//     result.value.then(step)
+//   }
+//   step()
+// }
 
-function run(gen) {
-  var g = gen()
-  function step(data) {
-    var result = g.next(data)
-    if (result.done) return
-    result.value.then(step)
-  }
-  step()
-}
 
 // function run(gen) {
 //   var g = gen()
@@ -50,7 +97,7 @@ function run(gen) {
 //   step()
 // }
 
-run(gen)
+// run(gen)
 
 
 
