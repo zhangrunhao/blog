@@ -1,66 +1,71 @@
-var fs = require('fs')
-var path = require('path')
+const co = require('co')
+const fs = require('fs')
+// 不再深入 node 中的steam模式读写数据了
+const steam = fs.createReadStream
 
-let filePath1 = path.join(__dirname, './test1.txt')
-let filePath2 = path.join(__dirname, './test2.txt')
-let filePath3 = path.join(__dirname, './test3.txt')
+// var fs = require('fs')
+// var path = require('path')
 
-var readFile = function (fileName) {
-  return new Promise(function (reslove, reject) {
-    fs.readFile(fileName, function (err, data) {
-      if (err) return reject(err)
-      reslove(data)
-    })
-  })
-}
+// let filePath1 = path.join(__dirname, './test1.txt')
+// let filePath2 = path.join(__dirname, './test2.txt')
+// let filePath3 = path.join(__dirname, './test3.txt')
 
-var gen = function * () {
-  var r1 = yield readFile(filePath1)
-  var r2 = yield readFile(filePath2)
-  console.log(r1.toString())
-  console.log(r2.toString())
-}
+// var readFile = function (fileName) {
+//   return new Promise(function (reslove, reject) {
+//     fs.readFile(fileName, function (err, data) {
+//       if (err) return reject(err)
+//       reslove(data)
+//     })
+//   })
+// }
+
+// var gen = function * () {
+//   var r1 = yield readFile(filePath1)
+//   var r2 = yield readFile(filePath2)
+//   console.log(r1.toString())
+//   console.log(r2.toString())
+// }
 
 
-function co(gen) { // 接受generator为参数, 返回一个promise对象
-  var ctx = this;
+// function co(gen) { // 接受generator为参数, 返回一个promise对象
+//   var ctx = this;
 
-  return new Promise(function (reslove, reject) {
-    // 判断gen是不是函数. 
-    // 如果是的话, 就执行这个函数, 
-    // 如果不是, 就把promise的状态改为resloved, 更改的方式就是执行reslove
-    if (typeof gen === 'function') gen = gen.call(ctx)
-    if (!gen || typeof gen.next !== 'function') return reslove(gen)
+//   return new Promise(function (reslove, reject) {
+//     // 判断gen是不是函数. 
+//     // 如果是的话, 就执行这个函数, 
+//     // 如果不是, 就把promise的状态改为resloved, 更改的方式就是执行reslove
+//     if (typeof gen === 'function') gen = gen.call(ctx)
+//     if (!gen || typeof gen.next !== 'function') return reslove(gen)
 
-    onFulfilled()
-    // 将next函数, 包含在了onFulfilled函数中, 捕获抛出的错误
-    function onFulfilled(res) {
-      var ret;
-      try {
-        ret = gen.next(res)
-      } catch (error) {
-        return reject(error)
-      }
-      next(ret)
-    }
+//     onFulfilled()
+//     // 将next函数, 包含在了onFulfilled函数中, 捕获抛出的错误
+//     function onFulfilled(res) {
+//       var ret;
+//       try {
+//         ret = gen.next(res)
+//       } catch (error) {
+//         return reject(error)
+//       }
+//       next(ret)
+//     }
 
-    // 关键函数, next函数, 通过onFulfilled函数不断调用next.
-    function next(ret) {
-      // 检车generator函数是否执行结束
-      if (ret.done) return reslove(ret.value)
-      // 确保每一步的值是promise
-      var value = toPromise.call(ctx, ret.value)
-      // 使用onFulfilled函数再次调用next函数
-      if (value && isPromise(value)) return value.then(onFulfilled, onRejected)
+//     // 关键函数, next函数, 通过onFulfilled函数不断调用next.
+//     function next(ret) {
+//       // 检车generator函数是否执行结束
+//       if (ret.done) return reslove(ret.value)
+//       // 确保每一步的值是promise
+//       var value = toPromise.call(ctx, ret.value)
+//       // 使用onFulfilled函数再次调用next函数
+//       if (value && isPromise(value)) return value.then(onFulfilled, onRejected)
 
-      // 在参数不符合的情况下, 更改状态为rejected, 终止执行
-      return onRejected(
-        new TypeError('yield只能是function, promise, generator, array, object, 你用的(ret.value)这个不行')
-      )
-    }
+//       // 在参数不符合的情况下, 更改状态为rejected, 终止执行
+//       return onRejected(
+//         new TypeError('yield只能是function, promise, generator, array, object, 你用的(ret.value)这个不行')
+//       )
+//     }
 
-  })
-}
+//   })
+// }
 
 // 在co模块内部, 可以在yeild后面直接写一个数组或者一个对象, 都可以通过yield, 来进行异步加载.
 // 其实js中正真正的异步, 就是多个promise同时执行, 然后, 然后一个promise.all, 就是异步的最好体现.
