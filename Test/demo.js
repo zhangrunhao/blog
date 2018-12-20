@@ -14,3 +14,14 @@ function commonDivision(a, b) {
   }
   return a
 }
+
+
+
+const ids = [123, 332, 334, 555]
+const showArray = [],
+
+ids.forEach((id, index) => {
+  axios.post({id}).then((res) => {
+    showArray.splice(index, 0, res)
+  })
+})
