@@ -26,3 +26,13 @@
 * 换了一个远程仓库, 添加的时候, 报错`fatal: remote origin already exists.`
 * 取消远程仓库关联: `git remote rm origin`
 * 再次添加就不会有问题了: `git remote add origin <远程仓库地址>`
+
+## 修改已提交节点的错误
+
+* `git revert <commit>`
+
+## 移除工作区没有跟踪的文件
+
+* `git clean -df`
+* -d: 清空目录
+* -f: 强制执行, 否则会报错: `fatal: clean.requireForce defaults to true and neither -i, -n, nor -f given; refusing to clean`
