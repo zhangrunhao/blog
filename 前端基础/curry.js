@@ -1,13 +1,10 @@
 function curry(fn) {
   let limit = fn.length
-  debugger
   return function handleFun (...args) {
-    debugger;
     if (args.length >= limit) {
       return fn.apply(null, args)
     } else {
       return function (...arg) {
-        debugger
         return handleFun.apply(null, args.concat(arg)) // 因为返回的这个函数, 就是handleFunction, 所以, 函数空间没有变
       }
     }

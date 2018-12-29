@@ -8,9 +8,8 @@ function compose(...fns) { // 1
   const len = fns.length
   let index = len - 1
   let result
-  debugger
   return function f1 (...args) {
-    debugger
+    if (!fns[index]) return null
     result = fns[index].apply(this, args)
     if (index <= 0) {
       return result
@@ -21,12 +20,16 @@ function compose(...fns) { // 1
   }
 }
 
-var greet = function (name) {
-  return 'hi:' + name
-}
-var exclaim = function (statement) {
-  return statement.toUpperCase() + '!'
-}
-var welcome = compose(exclaim, greet)
-var res = welcome('dot')
+// var greet = function (name) {
+//   return 'hi:' + name
+// }
+// var exclaim = function (statement) {
+//   return statement.toUpperCase() + '!'
+// }
+// var welcome = compose(exclaim, greet)
+// var res = welcome('dot')
+
+var res = compose()
+
+var r = res()
 debugger
