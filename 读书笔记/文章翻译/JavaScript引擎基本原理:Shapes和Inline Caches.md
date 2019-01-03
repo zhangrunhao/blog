@@ -1,4 +1,4 @@
-# JavaScript引擎基本原理:Shapes和Inline Cashes
+# JavaScript引擎基本原理:Shapes和Inline Caches
 
 > 原文链接: [JavaScript engine fundamentals:Shapes and line Cahes](https://mathiasbynens.be/notes/shapes-ics)
 
@@ -241,3 +241,35 @@
   稍等, 现在让我们往前想一想... 这就是我们之前添加模型的地方. 这就是关于模型的全部.
 
   模型的处理方式是非常有效的. 另一种优化方式称之为 ***内嵌缓存(Inline Caches)***
+
+### Inline Caches(ICs)
+
+  模型背后的主要动机是内嵌缓存(Inline Caches/ ICs)的概念. ICs是JavasCript快速运行的重要因素. 引擎使用ICs来记录找到对象属性的地方, 减少昂贵的查找次数.
+
+  这是函数`getX`, 他接受一个对象, 并加载属性`x`
+
+  ```js
+  function getX(o) {
+    return o.x;
+  }
+  ```
+
+  如果我们在JSC中运行这个环节, 他会产出下面字节码.
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/ic-1.svg)
+
+  首先, `get_by_id` 从第一个参数中加载属性x, 并将结果存储到`loc0`中. 第二条命令然后我们存储在`loc0`中存储的结果.
+
+  JAC也嵌入了内嵌缓存到`get_by_id`指令中, 有两个未初始化的插槽构成.
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/ic-2.svg)
+
+  现在, 我们假设传入一个对象`{ x: 'a' }`, 来执行`getX`这个函数. 前面学到的, 这个对象有一个模型, 这个模型上有属性`x`, 然后这个`Shape`存储了偏移量, 和关于属性x的描述. 当你在第一时间执行这个函数的时候, `get_by_id`指令会去向上查找属性`x`, 然后发现值是存储在偏移量为`0`的位置.
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/ic-3.svg)
+
+  这个内嵌了的IC, 进入到`get_by_id`指令中, 缓存了模型, 和需要寻找属性的偏移量.
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/ic-4.svg)
+
+  后面这个函数再次执行的时候, IC只需要对比模型, 发现和上一个模型一样, 那么只需要加载从存取的偏移量取值. 明确一点, 如果引擎发现IC之前记录了这个对象使用的模型, 那么他不再需要去查询出这个属性的全部信息. 相反的, 能够直接跳过昂贵的属性信息查找. 这对于每一次都要查找属性的速度提升是显而易见的.
