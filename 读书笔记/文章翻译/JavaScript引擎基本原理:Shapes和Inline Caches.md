@@ -57,9 +57,9 @@
 
   除了表示本身的`[[value]]`, 这个规范定义了一些其他的属性.
 
-    * `[[writable]]` 确定这个属性是否可以重新分配,
-    * `[[Enumerable]]` 确定了这个属性能否在`for-in`循环中展示,
-    * 和`[[Configurable]]` 确定了这个属性能否被删除.
+* `[[writable]]` 确定这个属性是否可以重新分配,
+* `[[Enumerable]]` 确定了这个属性能否在`for-in`循环中展示,
+* 和`[[Configurable]]` 确定了这个属性能否被删除.
 
   这两个中括号(double square brackets)的表示, 看起来非常有趣, 这是规范表示不能直接保留的JavaScript属性. 通过使用JavaScript中的`Object.getOwnPropertyDesriptor`API, 你仍然可以任何给定的对象上面属性的描述.
 
@@ -154,11 +154,11 @@
 
   所有的JavaScript引擎都用到了模型的优化手段, 但是他们不一定成为模型:
 
-    *  Academic papers: ***Hidden Classes*** (让人和js中的class搞混)
-    *  V8: ***Maps*** (容易和`Map`混淆)
-    * Chakra: ***Types*** (容易和js中的动态类型, 还有`typeof` 运算符搞混)
-    * JavaScriptCore: ***Structures***
-    * SpiderMonkey: ***Shapes***
+* Academic papers: ***Hidden Classes*** (让人和js中的class搞混)
+* V8: ***Maps*** (容易和`Map`混淆)
+* Chakra: ***Types*** (容易和js中的动态类型, 还有`typeof` 运算符搞混)
+* JavaScriptCore: ***Structures***
+* SpiderMonkey: ***Shapes***
 
   在本文中, 我们将继续使用shapes这个单词.
 
@@ -273,3 +273,58 @@
   ![图片](https://mathiasbynens.be/_img/js-engines/ic-4.svg)
 
   后面这个函数再次执行的时候, IC只需要对比模型, 发现和上一个模型一样, 那么只需要加载从存取的偏移量取值. 明确一点, 如果引擎发现IC之前记录了这个对象使用的模型, 那么他不再需要去查询出这个属性的全部信息. 相反的, 能够直接跳过昂贵的属性信息查找. 这对于每一次都要查找属性的速度提升是显而易见的.
+
+## 高效的数组存储
+
+  对于数组来说, 经常遇到把数组的索引作为属性存储起来. 每一个属性对应的数值, 称之为数组元素. 把每一个相同的数组中的元素的信息都存储起来, 是非常浪费空间的. 相反的, 引擎利用数组元素的属性是可修改, 可枚举, 可删除这个一个默认配置, 将数组元素和其他的命名元素分成存储.
+
+  思考下面的数组:
+
+  ```js
+  const array = [
+    '#jsconfeu'
+  ];
+  ```
+
+  引擎存储了数组的长读(`1`), 并且指向了`Shape`, 这里包含了偏移量, 和关于属性`length`的属性描述.
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/array-shape.svg)
+
+  这和我们之前看到的非常相似, 那么数组的值存储在哪里呢?
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/array-elements.svg)
+
+  每一个数组都有一个单独的 ***元素单元(element backing)*** 进行存储包含在索引对应的所有的属性的值. JavaScript引擎不会存储任何元素的属性描述, 因为他们总是可编辑, 可枚举, 可删除的.
+
+  可是, 在不正常的例子下会发生什么呢? 如果你感觉数组元素的属性描述呢?
+
+  ```js
+  // please don't ever do this
+  const array = Object.defineProperty(
+    [],
+    '0',
+    {
+      value: 'Oh noes!!1',
+      writable: false,
+      enumerable: false,
+      configurable: false,
+    }
+  );
+  ```
+
+  上面的代码中定义了一个属性`0`, (但是这又刚好是数组的索引), 但设置他的属性描述为非默认值.. (说真的, 没看懂...)
+
+  在这种极限情况下, 引擎支持使用一个字典来映射整个数组元素的存储空间.
+
+  ![图片](https://mathiasbynens.be/_img/js-engines/array-dictionary-elements.svg)
+
+  即使我们只有一个数组元素使用了非默认配置的属性, 那整个数组的存储空间都会变慢, 变成一种毫无效果的模式. **避免`Object.defineProperty`在数组上的使用** (我不知道你为什么要这么做, 他看起来毫无用处.)
+
+## 另外几点
+
+  我们学习了引擎如何存储对象和数组, 已经Shapes和ICs如果优化那些常见的操作. 基于这些只是, 我们可以总结出来几点在实际写代码的时候, 能够帮助促进性能的建议:
+
+* 经常使用同一种方式初始化你的对象, 这样他们在结束的时候, 就不会产生不同的模型
+* 不要搞错数组元素的属性描述, 让他们更加高效的存储和操作
+
+> Note: 这是我的第一篇原文翻译文章
