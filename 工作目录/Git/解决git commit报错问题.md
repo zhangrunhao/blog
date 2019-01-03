@@ -22,6 +22,8 @@ error: Error building trees
 
 > [https://stackoverflow.com/questions/28832815/git-commands-require-sudo-on-osx](stackoverflow)
 
+  其实就是我们的项目`git clone`的时候, 需要系统`sudo`权限, 和我们git安装与关系. 应该是ssh需要系统权限. 即使操作了, 以后`git fetch` 和 `git push` 也需要权限. 但最起码, 保存不恶心了...
+
 ### 解决办法
 
 * `chown -R <user> myproject`
