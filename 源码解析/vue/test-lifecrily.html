@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div ref="test">
+      {{ obj.aaa }}
+      <component-a :test="count" :childObj="obj"></component-a>
+      <component-b :test="count" :childObj="obj"></component-b>
+      <component-c :test="count" :childObj="obj"></component-c>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var mixins = {
+      beforeCreate() {
+        console.log(`${this.msg}-beforeCreate`)
+      },
+      created() {
+        console.log(`${this.msg}-created`)
+      },
+      beforeMount() {
+        console.log(`${this.msg}-mount`)
+      },
+      mounted() {
+        console.log(`${this.msg}-mounted`)
+      },
+      beforeUpdate() {
+        console.log(`${this.msg}-beforeUpdate`)
+      },
+      updated() {
+        console.log(`${this.msg}-updated`)
+      },
+      beforeDestroy() {
+        console.log(`${this.msg}-beforeDestory`)
+      },
+      destroyed() {
+        console.log(`${this.msg}-destroyed`)
+      },
+    }
+    var AChild = {
+      mixins: [mixins],
+      template: `<div><div>component:{{msg}}</div></div>`,
+      data() {
+        return {
+          msg: 'AChild'
+        }
+      }
+    }
+    var ComponentA = {
+      mixins: [mixins],
+      data() {
+        return {
+          msg: 'A',
+          count: 0
+        }
+      },
+      props: {
+        childObj: {
+          type: Object,
+          default: () => {
+            return {}
+          }
+        },
+        test: Number,
+      },
+      methods: {
+        testClick() {
+          this.count++
+        }
+      },
+      template: `
+        <div>
+          <a-child></a-child>
+          <div>test:{{count}}</div>
+          <button @click="testClick">click</button>
+        </div>
+      `,
+      components: {
+        AChild,
+      }
+    }
+    var BChild = {
+      mixins: [mixins],
+      template: `<div><div>component:{{msg}}</div></div>`,
+      data() {
+        return {
+          msg: 'BChild'
+        }
+      }
+    }
+    var ComponentB = {
+      mixins: [mixins],
+      template: `
+        <div>
+          <div>component:{{msg}}</div>
+          <b-child></b-child>
+        </div>
+      `,
+      data() {
+        return {
+          msg: 'B'
+        }
+      },
+      components: {
+        BChild,
+      }
+    }
+    var ComponentC = {
+      mixins: [mixins],
+      template: `<div><div>component:{{msg}}</div></div>`,
+      data() {
+        return {
+          msg: 'C'
+        }
+      }
+    }
+
+    var app = new Vue({
+      el: '#app',
+      mixins: [mixins],
+      data: {
+        obj: {
+          aaa: 'this is name',
+          meg: 'parent'
+        },
+        count: 0,
+        msg: 'PARENT'
+      },
+      components: {
+        ComponentA,
+        ComponentB,
+        ComponentC,
+      }
+    })
+  </script>
+</body>
+
+</html>
