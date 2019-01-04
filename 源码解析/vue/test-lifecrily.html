@@ -12,6 +12,7 @@
   <div id="app">
     <div ref="test">
       {{ obj.aaa }}
+      <button @click="testClick">parent-destroy</button>
       <component-a :test="count" :childObj="obj"></component-a>
       <component-b :test="count" :childObj="obj"></component-b>
       <component-c :test="count" :childObj="obj"></component-c>
@@ -126,6 +127,11 @@
     var app = new Vue({
       el: '#app',
       mixins: [mixins],
+      methods: {
+        testClick() {
+          this.$destroy()
+        }
+      },
       data: {
         obj: {
           aaa: 'this is name',
