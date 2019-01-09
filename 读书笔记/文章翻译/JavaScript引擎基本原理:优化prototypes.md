@@ -1,5 +1,7 @@
 # JavaScript引擎基本原理: 优化prototypes
 
+> 原文链接: [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes#comments)
+
   这篇文章介绍了一些JavaScript引擎常用的优化关键点, 并不只是Benedikt和Mathias开发的v8. 作为一名js开发者, 更深层次的了解引擎的工作原理可以帮助你了解你代码的性能特征.
 
   之前, 我们js使用shapes和inline caches优化对象和数组的访问. 这篇文章介绍了优化管道的权衡利弊(trade-off, 就是前面的使用解析器和优化器的权衡), 以及介绍了引擎如何提升访问原型的性能.
