@@ -36,3 +36,9 @@
 * `git clean -df`
 * -d: 清空目录
 * -f: 强制执行, 否则会报错: `fatal: clean.requireForce defaults to true and neither -i, -n, nor -f given; refusing to clean`
+
+## 合并某个节点的代码
+
+> 参考: [git cherry-pick用法](https://www.jianshu.com/p/d577dcc36a08 )
+* `git cherry-pick`
+* 大概就是可以在当前分支上, 重演了你需要的commit上的操作.., 具体的还没玩.
