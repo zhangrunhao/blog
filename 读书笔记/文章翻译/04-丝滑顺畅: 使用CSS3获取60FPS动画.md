@@ -190,3 +190,177 @@
   ![图片](http://plkjlr20y.bkt.clouddn.com/03-2.jpeg)
 
   同样, 我也是使用这种控制类名的方式实现的动画.
+
+## 60FPS的顺畅动画
+
+  如果我们从视图层外边创建一个区域替代之前的做法呢? 一个隔离的区域, 可以确保影响到的元素, 就是想要进行动画的.
+
+  所以, 我们使用下面这种HTML结构.
+
+  ```html
+  <div class="menu">
+    <div class="app-menu"></div>
+  </div>
+  <div class="layout">
+    <div class="header">
+      <div class="menu-icon"></div>
+    </div>
+    <a href="www.baidu.com">baidu</a>
+  </div>
+  ```
+
+  现在我们可以使用稍微不同的方式控制menu的状态了. 当动画结束的时候, 我们使用JavaScript中的`transitionend`函数, 删除还有动画的类名.
+
+  ```js
+  function toggleClassMenu() {
+    myMenu.classList.add("menu--animatable");
+    if (!myMenu.classList.contains("menu--visible")) {
+      myMenu.classList.add("menu--visible");
+    } else {
+      myMenu.classList.remove('menu--visible');
+    }
+  }
+
+  function OnTransitionEnd() {
+    myMenu.classList.remove("menu--animatable");
+  }
+
+  var myMenu = document.querySelector(".menu");
+  var oppMenu = document.querySelector(".menu-icon");
+  myMenu.addEventListener("transitionend", OnTransitionEnd, false); // 只在动画期间添加动画函数
+  oppMenu.addEventListener("click", toggleClassMenu, false);
+  myMenu.addEventListener("click", toggleClassMenu, false);
+  ```
+
+  让我们全部结合起来, 然后检查结果.
+
+  下面是完整, 可以使用CSS3的例子, 每一处都使用了最正确的方式.
+
+  ```css
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      pointer-events: none; /* 这个属性表示, 即使是上面有一层, 也不影响, 下面元素的使用 */
+      z-index: 150;
+    }
+
+    .menu--visible {
+      pointer-events: auto; /* 遮盖了, 也就不让用了 */
+    }
+
+    .app-menu {
+      background-color: #fff;
+      color: #fff;
+      position: relative;
+      max-width: 400px;
+      width: 90%;
+      height: 100%;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      -webkit-transform: translateX(-103%);
+      transform: translateX(-103%);
+      display: flex;
+      flex-direction: column;
+      will-change: transform;
+      z-index: 160;
+      pointer-events: auto; /* 这是我们的侧边栏, 打开的时候, 不让用下面的元素 */
+    }
+
+    .menu--visible .app-menu {
+      -webkit-transform: none;
+      transform: none;
+    }
+
+    .menu--animatable .app-menu { /* 消失的时候, 先慢后快 */
+      transition: all 130ms ease-in;
+    }
+
+    .menu--visible.menu--animatable .app-menu { /* 出现的时候, 先快, 后慢 */
+      transition: all 330ms ease-out;
+    }
+
+    .menu:after {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      will-change: opacity;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
+    }
+
+    .menu--visible.menu:after {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* aux */
+
+    body {
+      margin: 0;
+    }
+
+    .layout {
+      width: 375px;
+      height: 667px;
+      background-color: #f5f5f5;
+      position: relative;
+    }
+
+    .header {
+      background-color: #ccc;
+    }
+
+    .menu-icon {
+      content: "Menu";
+      color: #fff;
+      background-color: #666;
+      width: 40px;
+      height: 40px;
+    }
+
+    .app-menu {
+      width: 300px;
+      height: 667px;
+      box-shadow: none;
+      background-color: #ddd;
+    }
+
+    .menu:after {
+      width: 375px;
+      height: 667px;
+    }
+  ```
+
+  ![图片](https://cdn-images-1.medium.com/max/800/0*EFkarCSe2mQEYK0e.)
+
+  让我们看下Timeline展示给我们的?
+
+  ![图片](https://cdn-images-1.medium.com/max/800/0*mDp5_LD08xtZKQyS.)
+
+  看到了吗? 非常流畅.
+
+### 最后一部分的测试
+
+  发现, 性能提升主要在Event中, 其他未能看出提升, 并进行了一个名为`Fire Idle Callback`.还需要深入了解下. 下图为实操图片:
+
+  ![图片](http://plkjlr20y.bkt.clouddn.com/fanyi03/04.jpg)
+
+## 总结
+
+* 再次深入学习了事件流.
+* 没有搞明白`关键渲染路径`到底是什么. 文章和官网说的不一样.
+* 知道了一个`will-change`和`pointer-events`
