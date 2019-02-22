@@ -5,6 +5,8 @@
 > * [Wireshark/HTTPS](https://en.wikiversity.org/wiki/Wireshark/HTTPS)
 > * [Journey to HTTP/2](https://kamranahmed.info/blog/2016/08/13/http-in-depth/)
 > * [以TCP/IP协议为例，如何通过wireshark抓包分析？](https://zhuanlan.zhihu.com/p/36414915)
+> * [TCP三次握手和四次挥手](https://www.cnblogs.com/qdhxhz/p/8470997.html)
+> * [Https详解+wireshark抓包演示](https://www.jianshu.com/p/a3a25c6627ee)
 
 ## 前言
 
@@ -47,6 +49,8 @@
 
   ![图片](https://pic002.cnblogs.com/images/2012/263119/2012100722541987.png)
 
+  ![three-shark](https://img2018.cnblogs.com/blog/1090617/201901/1090617-20190116110625814-795901602.png)
+
   一次完整的三次握手的过程就完成了, 客户端和服务器端的数据就可以开始传输了. 需要注意的是, 客户端一旦发送完最后一个`ACK`数据包, 就立即开始发送应用数据, 但是服务器端需要等到最后一个`ACK`包接受完成才会去响应请求.
 
 ## 抓包HTTP分析
@@ -63,6 +67,7 @@
 
 ### 四次挥手
 
+  ![four-shark](https://img2018.cnblogs.com/blog/1090617/201901/1090617-20190116111104366-175362855.png)
   ![图片07](http://zhangrunhao.oss-cn-beijing.aliyuncs.com/blog/wireshark-tcp/07.jpg)
   ![图片08](http://zhangrunhao.oss-cn-beijing.aliyuncs.com/blog/wireshark-tcp/08.jpg)
   ![图片09](http://zhangrunhao.oss-cn-beijing.aliyuncs.com/blog/wireshark-tcp/09.jpg)
