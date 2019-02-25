@@ -22,6 +22,7 @@ int testVariables() {
   print(antennaDiameter);
   print(flybyObjects);
   print(image);
+  return null;
 }
 
 Future getAJoke() {
@@ -50,6 +51,7 @@ int controlFlowStatements() {
     print(year);
     year += 1;
   }
+  return null;
 }
 
 // 函数
