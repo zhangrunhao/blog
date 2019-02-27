@@ -22,3 +22,10 @@
   * [mac电脑上命令行启动安卓模拟器](https://juejin.im/post/5bcfe1e7518825779a41fa5e)
   * emulator -list-avds
   * emulator -avd Nexus_5X_API_28
+
+## 语法方法
+
+### 类被当做方法执行??
+
+* 类被当做方法执行的时候, 执行的是那个属性
+* widget 类执行的是build函数, ThemeData执行的是什么方法??factory??
