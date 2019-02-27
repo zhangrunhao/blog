@@ -332,7 +332,7 @@
     height="500"
     >
     <rect x="250" y="250" width="50" height="50" fill="#feac5e">
-      <animateTransform 
+      <animateTransform
         attributeName="transform"
         type="rotate"
         begin="0s"
@@ -379,6 +379,6 @@
   </script>
 ```
 
-### 后面还有一些读取SVG源码, 转换Cavas没写.. 懒得看了.
+### 后面还有一些读取SVG源码, 转换Cavas没写.. 懒得看了
 
-### 还有一个实例, 有兴趣的可以看阮一峰老师的博客了. 我就是入个门, 看看svg是什么.
+### 还有一个实例, 有兴趣的可以看阮一峰老师的博客了. 我就是入个门, 看看svg是什么
