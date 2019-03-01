@@ -2,7 +2,7 @@
 
 > * 参考文章:
 > * [CSS3 Transitions, Transforms和Animation使用简介与应用展示](https://www.zhangxinxu.com/wordpress/2010/11/css3-transitions-transforms-animation-introduction/#three)
-> * [CSS3 transition 属性](http://www.w3school.com.cn/cssref/pr_transition.asp)
+> * [CSS 参考手册](http://www.w3school.com.cn/cssref/index.asp)
 
 ## 动画的分类
 
