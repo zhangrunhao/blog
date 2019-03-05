@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>测试Hilo</title>
+</head>
+
+<body>
+  <div>测试使用:</div>
+  <div id="stage"></div>
+  <script src="./hilo-standalone.js"></script>
+  <script>
+    window.onload = function () {
+      // 创建舞台
+      var stage = new Hilo.Stage({
+        renderType: 'canvas',
+        container: document.getElementById('stage'),
+        width: 200,
+        height: 400,
+      })
+
+      // 创建定时器
+      var ticker = new Hilo.Ticker(60) // 60FPS刷新
+      ticker.addTick(stage) // 添加定时器, stage中含有tick方法
+      ticker.start()
+
+      // 创建可视图像
+      var img = new Hilo.Bitmap({
+        image: './test.jpg',
+        rect: [0, 0, 100, 100],
+      }).addTo(stage)
+
+      // 事件交互
+      stage.enableDOMEvent(Hilo.event.POINTER_START, true) // 开启舞台的DOM响应
+      img.on(Hilo.event.POINTER_START, function (e) {
+        console.log(e.eventTarget, e.stageX, e.stageY)
+      })
+      
+    }
+  </script>
+</body>
+
+</html>
