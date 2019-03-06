@@ -6,21 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>测试Hilo</title>
+  <style>
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  </style>
 </head>
 
 <body>
-  <div>测试使用:</div>
   <div id="stage"></div>
   <script src="./hilo-standalone.js"></script>
   <script>
     window.onload = function () {
+      var gameWidth = 500
+      var gameHeight = 400
+      var stargeScaleX = innerWidth / gameWidth;
+      var stargeScaleY = innerHeight / gameHeight;
       // 创建舞台
       var stage = new Hilo.Stage({
         renderType: 'canvas',
         container: document.getElementById('stage'),
-        width: 200,
-        height: 400,
+        width: gameWidth,
+        height: gameHeight,
+        scaleX: stargeScaleX,
+        scaleY: stargeScaleY
       })
+      window.onresize = function () {
+        stage.scaleX = innerWidth / gameWidth;
+        stage.scaleY = innerHeight / gameHeight;
+        stage.resize(gameWidth, gameHeight, true);
+      }
 
       // 创建定时器
       var ticker = new Hilo.Ticker(60) // 60FPS刷新
