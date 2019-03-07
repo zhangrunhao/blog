@@ -33,9 +33,11 @@
       }])
       
       queue.on('complete', function(e){
-        var bg = queue.getContent('bg');
-        console.log(bg);
+        console.log(e)
+        // var bg = queue.getContent('bg');
+        // console.log(bg);
       });
+      queue.start()
 
       var gameWidth = 500
       var gameHeight = 400
