@@ -19,6 +19,24 @@
   <script src="./hilo-standalone.js"></script>
   <script>
     window.onload = function () {
+      var queue = new Hilo.LoadQueue(); // 新建下载队列
+      queue.maxConnections = 2; // 最大连接数是2
+      queue.add([{
+        id: 'bg',
+        src: '../FlappyBird/images/bg.png',
+      }, {
+        id: 'js',
+        src: './hilo-standalone.js'
+      }, {
+        id: 'js2',
+        src: './Generator异步应用.js'
+      }])
+      
+      queue.on('complete', function(e){
+        var bg = queue.getContent('bg');
+        console.log(bg);
+      });
+
       var gameWidth = 500
       var gameHeight = 400
       var stargeScaleX = innerWidth / gameWidth;
@@ -45,7 +63,7 @@
 
       // 创建可视图像
       var img = new Hilo.Bitmap({
-        image: './test.jpg',
+        image: '../FlappyBird/images/bg.png',
         rect: [0, 0, 100, 100],
       }).addTo(stage)
 
@@ -54,7 +72,7 @@
       img.on(Hilo.event.POINTER_START, function (e) {
         console.log(e.eventTarget, e.stageX, e.stageY)
       })
-      
+
     }
   </script>
 </body>
