@@ -40,5 +40,12 @@
 ## 合并某个节点的代码
 
 > 参考: [git cherry-pick用法](https://www.jianshu.com/p/d577dcc36a08 )
+
 * `git cherry-pick`
 * 大概就是可以在当前分支上, 重演了你需要的commit上的操作.., 具体的还没玩.
+
+## 分支重命名
+
+### 本地分支
+
+git branch -m old new
