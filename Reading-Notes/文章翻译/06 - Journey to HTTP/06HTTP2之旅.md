@@ -1,6 +1,7 @@
 # HTTP/2之旅
 
 > [Journey to HTTP/2](https://kamranahmed.info/blog/2016/08/13/http-in-depth/)
+> [HTTP/2](https://www.jianshu.com/p/2978faf392bd)
 
   距离我上一次通过博客写作以来, 经过了很长的一段安静的时间. 因为一直没有足够的时间投入其中. 直到现在有了一些空闲的时间, 我想利用他们写一些HTTP相关的文章.
 
@@ -110,3 +111,81 @@ GET /index.html
 * 支持增强压缩
 * 新的状态码
 * 等等
+
+  我并不准备在这篇文章里面, 完全展开素有`HTTP/1.1`的功能. 你可以通过自己去了解更多. 我推荐你阅读[Key differences between HTTP/1.0 and HTTP/1.1](http://www.ra.ethz.ch/cdstore/www8/data/2136/pdf/pd1.pdf), 还还有一个不错的[original RFC](https://tools.ietf.org/html/rfc2616)
+
+  `HTTP/1.1`在1999年发布后, 已经存在很多年了. 即使它能够不错的提高性能, 但网络世界每天都在变化, 它有些力不从心. 如今加载一个网页特别消耗资源. 一个简单的网页至少打开30个链接. 即使`HTTP/`1.1`引入了持久连接, 为什么这么连接呢? 因为在`HTTP/1.1`中任何时间, 都只能有一个未完成的链接. 在`HTTP/1.1`尝试通过管道流水线操作(pipelining)去解决, 但因为**线头阻塞(head-of-line-blocking)**的原因没能解决问题, 指的是, 如果缓慢和繁重的请求可能会阻塞后面的请求, 一但某个管道中的请求被阻塞了, 那就不能不等到下一次请求被满足. (TODO: 这里没有很好的理解管道流的概念). 为了解决在`HTTP/1.1`中的这些缺点, 开发者开始实行变通的方法. 例如, 使用精灵图, 在对CSS中的图片进行编码, 唯一一个极大的CSS/JavaScript文件, 主域分割([domain sharding](https://blog.stackpath.com/glossary/domain-sharding/))等
+
+## SPDY - 2009
+
+  Google带头开始尝试新的协议, 来提高web速度, 提升web的安全性, 降低网页加载延迟. 在2009年, 他们发布了`SPDY`.
+  
+  ***`SPDY`, 是谷歌的商标, 并非是首字母缩写***
+
+  协议提出, 我们可以通过提高带宽的方式提高网络的性能, 但是有一个点, 过了这个点, 就没有办法大量的提升性能了. 但如果你对延迟也这么做, 就是我们继续降低延迟, 延迟是性能提高的常数, 也就是降低延迟, 就可以提高西性能. 在`SPDY`之后, 关于性能提升有一个重要理念, 降低延迟, 以此提高网站的性能.
+
+  ***当我们并不请求其中的不同, 延迟就是延迟, 也就是, 数据在服务器和客户端之间需要的传递时间(使用毫秒计算.) 带宽是指每秒钟数据传输的总量(bit/每秒)***
+
+  `SPDY`的功能包括: 多路优化, 压缩, 优先级划分, 安全性等. 在这里并不会深入讲解`SPDY`, 因为下面的`HTTP/2`协议大部分都受到了`SPDY`的启发.
+
+  `SPDY`并没有尝试取代`HTTP`; 它是HTTP所在应用数据层之上的传输层, 在请求发送到网络之前对其进行修改. 它开始在实际中投入使用, 大部分的浏览器开始使用它.
+
+  2015年, Google并不希望出现竞争的两种协议, 他们决定把它合并到HTTP中, 产生`HTTP/2`, 不再使用SPDY.
+
+## `HTTP/2` - 2015
+
+  现在, 你一定确信, 我们需要另一个增强版的HTTP协议. `HTTP/2`是为了降低内容的延迟传输而设计的. 和`HTTP/1.1`主要区别或者功能, 包括:
+
+* 使用二进制替代文本  
+* 多路复用(Multiplexing) - 多个异步HTTP请求使用同一个链接.
+* 使用HPACK压缩头部
+* 服务端推送 - 对同一个请求的多个响应
+* 请求优化
+* 安全性
+
+  ![图片](http://i.imgur.com/S85j8gg.png)
+
+### 名词解释
+
+> 这里参考: [HTTP/2](https://www.jianshu.com/p/2978faf392bd)
+
+* Message: 逻辑上的request, response.
+* Frame: 数据传输中的最小单位. 每个Frame都属于一个特定的stream或者整个链接.
+  * Length: Frame的长度, 默认最大16kb, 如果要更大需要设置max frame size
+  * Type: Frame的类型, 有DATA, HEADRES, PRIORITY等
+  * Flag 和 R: 保留位
+  * Stream identifier: 标识所属于的stream, 如果为0, 表示这个frame属于整条链接.
+  * Frame Payload: 不同的type, 有不同的格式.
+* Stream: 一个双向流, 一条链接可以有多个stream.
+  * HTTP/2依靠streams实现了多路复用, 提高了链接的利用率.
+  * 一条连接可以包含多个streams, 多个streams发送的数据互不影响
+  * Stream可以被client和server单方面使用, 也可以共享使用
+  * Stream会确定好发送frame的顺序, 另一端按照接收到的顺序处理
+  * Stream会有唯一的标识.
+    * 如果是客户端创建的stream, ID是奇数.如果是server创建的, ID就是偶数. ID 0x00和0x01都有特定用途.
+    * Stream不可能被重复利用, 如果一条链接的ID分配完了, client会新建一条连接. 而server则会给clent发送一个GOAWAY frame强制client新建一条链接.
+    * 为了更大的一条连接上面的stream并发, 可以考虑调大SETTING_MAX_CONCURRENT_STREAMS
+
+### 1. 二进制协议
+
+  `HTTP/2`尝试通过二进制协议的方法解决,现在`HTTP/1.1`的延迟问题. 作为一个二进制协议, 他更容易被解析, 但不容易被人眼所辨识. `HTTP/2`主要使用Frames和Streams进行构建.
+
+  介绍下: **Frames和Streams**
+
+  HTTP中的信息, 现在能够被压缩成为一个或多个frames. `HEADRS`frame为了元数据(meta data), `DATA`frame为了有效荷载(payload), 还有存在其他集中类型的frames(HEADRS, DATA, RST_STREAM, SETTINGS, PRIORITY等), 你可以查看![the HTTP/2 specs](https://http2.github.io/http2-spec/#FrameTypes)
+
+  每一个`HTTP/2`的请求和响应都会生成一个唯一的streamID并分配给frames. Frames只是二进制的数据. 一个frames的链接被称为Stream. 每一个frame都有stream id. 用来标记他所属于的stream, 每一个frame都有相同的头部. 此外, 除了Stream ID 是唯一的以外, 值得一提的是, 客户端发定义的任何一个请求中的streamID都使用奇数, 服务器的每一个响应中的streamID都是用偶数.
+
+  除了`HEADERS`和`DATA`两种类型的frame, 其他类型的frame中, 我想提下, `RST_STREAM`, 这是一种特殊的类型, 用来中断stream, 即, 客户端发送了这种frame就是告诉服务器, 我再也不需要这种stream了. 在`HTTP/1.1`中, 唯一一种可以让服务器端停止发送数据的方法, 就是响应的时候告诉客户端关闭这条连接. 导致了延迟增加, 因为一个新的链接需要非常多次的请求进行打开. 在`HTTP/2`中, 客户端可以使用`RST_STREAM`, 去停止接受一个特殊的Stream, 这个链接会一直保持着打开, 另一个stream会继续使用.
+
+### 2. 多路复用(Multiplexing)
+
+  因为`HTTP/2`现在是一个二进制的协议, 正如前面所说的, 他使用frames和stream进行请求和响应, 一个TCP链接一旦被打开, 所有的stream都可以使用相同的链接进行异步的发送, 不需要再增加任何链接. 相反, 服务器也可以进行相同的异步响应方法, 即, 响应没有顺序, 客户度使用streamID来进行特殊数据包的区分. 这样就可以解决一个**头部阻塞问题(head-of-line-blocking)**的问题. 客户端不需要话费时间一直等待请求, 其他请求仍然被正常处理.
+
+### 3. HPACK头部压缩(HPACK Header Compression)
+
+  这是RFC中单独的一部分, 这是RFC针对优化发送的报文头部. 当同一个客户端不断访问着服务器的时候, 会带着很多多余的数据. 我们一遍又一遍的发送着报文头部, 有时候, 会有cookies增加报文头部的大小, 导致的带宽的使用增加了时间延迟. 为了解决这个问题, `HTTP/2`使用了头部压缩.
+
+  ![图片](http://i.imgur.com/3IPWXvR.png)
+
+  与请求响应不同的是, 头部信息无法通过`gzip`或者`compress`等格式压缩, 但
