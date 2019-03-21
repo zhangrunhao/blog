@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    #container {
+      width: 300px;
+      height: 1400px;
+      background: skyblue;
+      overflow: hidden;
+    }
+
+    #app {
+      margin-top: 500px;
+      width: 200px;
+      height: 300px;
+      background: salmon;
+    }
+
+    #btn {
+      position: fixed;
+      top: 0;
+      right: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="btn">测试</button>
+  <div id="container">
+    <div id="app"></div>
+  </div>
+  <script>
+    window.onload = function () {
+      var container = document.getElementById('container');
+      var app = document.getElementById('app');
+      document.getElementById('btn').onclick = function () {
+        var bounds = app.getBoundingClientRect();
+        var offsetY = ((window.pageYOffset || document.scrollTop) - (document.clientTop || 0)) || 0;
+        console.log(bounds.top)
+        console.log(offsetY)
+      }
+      // var offsetY = 
+      // var top = bounds.top + offsetY + padTop
+    }
+  </script>
+</body>
+
+</html>
