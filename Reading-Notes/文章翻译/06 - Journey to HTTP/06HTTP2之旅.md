@@ -206,4 +206,8 @@ GET /index.html
 
 ### 6. 安全性
 
-  
+  是否应该在`HTTP/2`中强制使用TLS, 引起了广泛讨论. 最后决定不会强制使用. 然而, 大部分的厂商表示, 他们只会在`TLS`层面上支持`HTTP\2`. 所以, 即使`HTTP/2`规范中不需要加密, 但是已经成为了一种默认的选项. `HTTP\2`通过`TLS`实现中的确有一些要求. 必须使用1.2或者更高版本的TLS, 必须含有一定级别的最小秘钥, 需要含有临时秘钥.\
+
+  `HTTP/2`在兼容性方面, 已经渐渐超过`SPDY`. 在许多方面提供了性能优势, 不用多久, 我们就可以开始用了.
+
+  对`HTTP/2`的详细细节感兴趣的人, 可以访问[link to specs](https://http2.github.io/http2-spec)和[demonstrating the performance benefits of HTTP/2.](http://www.http2demo.io/). 欢迎在评论中提出疑问,希望指出在阅读过程中遇到的错误点. 下次见.
