@@ -16,7 +16,7 @@
 ### 快速启动
 
 * ios:
-  * xcrun instruments -w "iPhone X (12.1)"
+  * xcrun instruments -w "iPhone X (12.2)"
   * [从命令行启动Xcode模拟器](https://www.jianshu.com/p/c5ad2e2be367)
 * andorid:
   * [mac电脑上命令行启动安卓模拟器](https://juejin.im/post/5bcfe1e7518825779a41fa5e)
