@@ -19,62 +19,36 @@
   <script src="./hilo-standalone.js"></script>
   <script>
     window.onload = function () {
-      var queue = new Hilo.LoadQueue(); // 新建下载队列
-      queue.maxConnections = 2; // 最大连接数是2
-      queue.add([{
-        id: 'bg',
-        src: '../FlappyBird/images/bg.png',
-      }, {
-        id: 'js',
-        src: './hilo-standalone.js'
-      }, {
-        id: 'js2',
-        src: './Generator异步应用.js'
-      }])
+      // var queue = new Hilo.LoadQueue(); // 新建下载队列
+      // queue.maxConnections = 2; // 最大连接数是2
+      // queue.add([{
+      //   id: 'perosn',
+      //   src: './person.png',
+      // }, {
+      //   id: 'app',
+      //   src: './app01.png'
+      // }])
       
-      queue.on('complete', function(e){
-        console.log(e)
-        // var bg = queue.getContent('bg');
-        // console.log(bg);
-      });
-      queue.start()
+      // queue.on('complete', function(e){
+      // });
+      // queue.start()
 
-      var gameWidth = 500
-      var gameHeight = 400
-      var stargeScaleX = innerWidth / gameWidth;
-      var stargeScaleY = innerHeight / gameHeight;
+      var gameWidth = 160
+      var gameHeight = 178
       // 创建舞台
       var stage = new Hilo.Stage({
         renderType: 'canvas',
         container: document.getElementById('stage'),
         width: gameWidth,
         height: gameHeight,
-        scaleX: stargeScaleX,
-        scaleY: stargeScaleY
       })
-      window.onresize = function () {
-        stage.scaleX = innerWidth / gameWidth;
-        stage.scaleY = innerHeight / gameHeight;
-        stage.resize(gameWidth, gameHeight, true);
-      }
-
-      // 创建定时器
-      var ticker = new Hilo.Ticker(60) // 60FPS刷新
-      ticker.addTick(stage) // 添加定时器, stage中含有tick方法
+      var ticker = new Hilo.Ticker(60)
+      ticker.addTick(stage)
       ticker.start()
-
-      // 创建可视图像
       var img = new Hilo.Bitmap({
-        image: '../FlappyBird/images/bg.png',
-        rect: [0, 0, 100, 100],
+        image: './app01.png',
+        rect: [0, 0, 156, 177], // 这里必须是图片的宽高, 我在之前的代码里面, 都用的是统一的全局高度
       }).addTo(stage)
-
-      // 事件交互
-      stage.enableDOMEvent(Hilo.event.POINTER_START, true) // 开启舞台的DOM响应
-      img.on(Hilo.event.POINTER_START, function (e) {
-        console.log(e.eventTarget, e.stageX, e.stageY)
-      })
-
     }
   </script>
 </body>
