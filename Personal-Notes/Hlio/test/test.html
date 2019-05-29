@@ -7,48 +7,43 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>测试Hilo</title>
   <style>
-  body {
-    padding: 0;
-    margin: 0;
-  }
+    body {
+      padding: 0;
+      margin: 0;
+    }
   </style>
 </head>
 
 <body>
-  <div id="stage"></div>
+  <button id="btn">测试</button>
   <script src="./hilo-standalone.js"></script>
   <script>
     window.onload = function () {
-      // var queue = new Hilo.LoadQueue(); // 新建下载队列
-      // queue.maxConnections = 2; // 最大连接数是2
-      // queue.add([{
-      //   id: 'perosn',
-      //   src: './person.png',
-      // }, {
-      //   id: 'app',
-      //   src: './app01.png'
-      // }])
-      
-      // queue.on('complete', function(e){
-      // });
-      // queue.start()
+      var count = 1
+      document.getElementById('btn').onclick = function () {
+        var div = document.createElement('div')
+        div.id = 'stage' + ++count
+        document.body.appendChild(div)
+        createStage()
+      }
 
-      var gameWidth = 160
-      var gameHeight = 178
-      // 创建舞台
-      var stage = new Hilo.Stage({
-        renderType: 'canvas',
-        container: document.getElementById('stage'),
-        width: gameWidth,
-        height: gameHeight,
-      })
-      var ticker = new Hilo.Ticker(60)
-      ticker.addTick(stage)
-      ticker.start()
-      var img = new Hilo.Bitmap({
-        image: './app01.png',
-        rect: [0, 0, 156, 177], // 这里必须是图片的宽高, 我在之前的代码里面, 都用的是统一的全局高度
-      }).addTo(stage)
+      function createStage() {
+        var stage = new Hilo.Stage({
+          renderType: 'canvas',
+          container: document.getElementById('stage' + count),
+          width: innerWidth,
+          height: innerHeight,
+        })
+        var ticker = new Hilo.Ticker(60)
+        ticker.addTick(stage)
+        ticker.start()
+        for (var i = 0; i < 100; i++) {
+          new Hilo.Bitmap({
+            image: './person.png'
+          }).addTo(stage)
+        }
+        return stage
+      }
     }
   </script>
 </body>

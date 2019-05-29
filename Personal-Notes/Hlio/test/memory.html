@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <style>
+  
+  #stage {
+    width: 100%;
+    height: 100%;
+  }
+  </style>
+  <title>测试内存</title>
+  <button id="add">增加图片</button>
+  <button id="clear">清除内存</button>
+  <div id="stage"></div>
+</head>
+
+<body>
+  <script src="./hilo-standalone.js"></script>
+  <script>
+    window.onload = function () {
+      var gameWidth = 440;
+      var gameHeight = 599;
+      // 创建舞台
+      var stage = new Hilo.Stage({
+        renderType: 'canvas',
+        container: document.getElementById('stage'),
+        width: gameWidth,
+        height: gameHeight,
+      })
+      var ticker = new Hilo.Ticker(60) // 60FPS刷新
+      ticker.addTick(stage) // 添加定时器, stage中含有tick方法
+      ticker.start()
+      let frames = []
+      var queue = new Hilo.LoadQueue(); // 新建下载队列
+      for (var i = 0; i < 23; i++) {
+        queue.add({
+          id: `s${i}`,
+          src: `http://k.sohu.com/static/sugar-workshop/1905_word/1.0.0/asset/image//share/transition/21/${i}.jpg`,
+        })
+      }
+      queue.start()
+      queue.on('complete', () => {
+        for (let i = 0; i < 23; i++) {
+          frames.push({
+            image: queue.getContent(`s${i}`),
+            rect: [0, 0, 650, 1050]
+          })
+        }
+        var a = new Hilo.Sprite({
+          frames,
+          width: gameWidth,
+          height: gameHeight,
+          interval: 200
+        }).play()
+        console.log(a)
+      })
+    }
+  </script>
+</body>
+
+</html>
