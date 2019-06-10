@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title></title>
+  <style>
+  .dv {
+    width: 100px;
+    height: 100px;
+    background: #FFC13A;
+    box-shadow: 0px 7px 7px 2px #bbb;
+  }
+  </style>
+</head>
+
+<body>
+  <!-- <form action="http://cms.in.xintiaotime.com/hook/report/print" method="post" id="formDom">
+    <input type="data" name="data" id="formInput" />
+  </form> -->
+  <div class="dv">
+    
+  </div>
+</body>
+  <script>
+  
+function outer() {
+  inner()
+}
+
+function inner() {
+  console.log(inner.caller)
+}
+
+outer()
+
+//   window.color = "red"
+// var o = {
+//   color: 'blue'
+// }
+
+// function sayColor() {
+//   console.log(this.color)
+// }
+
+// sayColor()
+
+// o.sayColor = sayColor
+// o.sayColor()
+
+// sayColor() 
+// var formDom = document.getElementById('formDom')
+  // var formInput = document.getElementById('formInput')
+  // formInput.value = JSON.stringify(data)
+  // formDom.submit()
+  // var data = [[1], [2]]
+
+  // var tempForm = document.createElement('form')
+  // tempForm.action = "http://cms.in.xintiaotime.com/hook/report/print"
+  // tempForm.method = "post"
+
+  // var inputDom = document.createElement('input')
+  // inputDom.name = "data"
+  // inputDom.value = JSON.stringify(data)
+  
+  // tempForm.appendChild(inputDom)
+  // document.body.appendChild(tempForm)
+
+  // tempForm.submit()
+
+  </script>
+</html>
