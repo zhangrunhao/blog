@@ -18,17 +18,26 @@
 <body>
     <button id="add">增加图片</button>
     <button id="clear">清除内存</button>
+    <button id="addTen">增加十倍图片</button>
     <div id="stage"></div>
     <script>
+    var count = 0
     var stage = document.getElementById('stage')
     document.getElementById('add').onclick = function () {
       for (var i = 0; i < 23; i++) {
-        stage.innerHTML += `<img src='./img/${i}.jpg' />`
-        // stage.innerHTML += `<img src='./transition/0/0.jpg' />`
+        stage.innerHTML += `<img src='./img${count}/${i}.jpg' />`
       }
+      ++count
     }
     document.getElementById('clear').onclick = function () {
       stage.innerHTML = ''
+    }
+    document.getElementById('addTen').onclick = function () {
+      for (var j = 0; j < 10; j++) {
+        for (var i = 0; i < 23; i++) {
+          stage.innerHTML += `<img src='./img${count}/${i}.jpg' />`
+        }
+      }
     }
     </script>
 </body>
