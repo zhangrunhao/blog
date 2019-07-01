@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <canvas id="glcanvas" width="700" height="500"></canvas>
+  <script>
+    // 获取WebGL
+    var canvas = document.getElementById('glcanvas')
+    gl = canvas.getContext("webgl")
+
+    // 创建顶点着色器
+    var VSHADER_SOURCE =
+      'void main() {\n' +
+      '  gl_Position = vec4(0.0, 0.0, 0.0, 1.0);\n' +
+      '  gl_PointSize = 10.0;\n' +
+      '}\n';
+    // 创建片元着色器
+    // var FSHADER_SOURCE =
+    //   'void main() {\n' +
+    //   '  gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);\n' +
+    //   '}\n';
+
+    // 绘制圆
+    var FSHADER_SOURCE = `
+      #ifdef GL_ES
+        precision mediump float;
+      #endif
+        void main() {
+          float d = distance(gl_PointCoord, vec2(0.5,0.5));
+          if(d < 0.5){
+            gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+          }else{ discard;} 
+        }`;
+
+    // 着色器代码需要放到一个程序中
+    var program = gl.createProgram()
+    // 创建顶点着色器
+    var vShader = gl.createShader(gl.VERTEX_SHADER)
+    // 创建片元着色器
+    var fShader = gl.createShader(gl.FRAGMENT_SHADER)
+
+    // shader容器与着色器绑定
+    gl.shaderSource(vShader, VSHADER_SOURCE)
+    gl.shaderSource(fShader, FSHADER_SOURCE)
+
+    // 将GLSE语言编写成浏览器可用的代码
+    gl.compileShader(vShader)
+    gl.compileShader(fShader)
+
+    // 将着色器添加到程序上
+    gl.attachShader(program, vShader)
+    gl.attachShader(program, fShader)
+
+    // 链接程序
+    // 在链接操作以后, 可以任意修改shader代码.
+    // 对shader重新编译不会影响整个程序, 除非重新链接程序
+    gl.linkProgram(program)
+
+    // 加载并使用链接好的程序
+    gl.useProgram(program)
+
+    // 绘制一个点
+    gl.clearColor(0.0, 0.0, 0.0, 1.0)
+    gl.clear(gl.COLOR_BUFFER_BIT)
+    gl.drawArrays(gl.POINTS, 0, 1)
+  </script>
+</body>
+
+</html>
