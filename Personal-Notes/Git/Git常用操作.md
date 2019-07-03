@@ -48,4 +48,14 @@
 
 ### 本地分支
 
-git branch -m old new
+`git branch -m old new`
+
+## 切出新分支
+
+### 从commit切出
+
+`git checkout -b [新分支名称] [节点]`
+
+### 从tag切出
+
+`git checkout -b [新分支名称] [tag名称]`
