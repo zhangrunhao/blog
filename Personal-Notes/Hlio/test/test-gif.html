@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body,
+    div,
+    canvas {
+      image-rendering: optimizeSpeed;
+      -webkit-image-rendering: optimizeSpeed;
+      -webkit-interpolation-mode: nearest-neighbor;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- <img src="./giphy1.gif" alt=""> -->
+  <div id="app">
+    <div id="stage"></div>
+  </div>
+  <script src="./hilo-standalone.js"></script>
+  <script>
+    window.onload = function () {
+      var gameWidth = 440;
+      var gameHeight = 599;
+      var stargeScaleX = innerWidth / gameWidth;
+      var stargeScaleY = innerHeight / gameHeight;
+      // 创建舞台
+      var stage = new Hilo.Stage({
+        renderType: 'canvas',
+        container: document.body,
+        width: gameWidth,
+        height: gameHeight,
+        scaleX: stargeScaleX,
+        scaleY: stargeScaleY
+      })
+  
+      // 创建定时器
+      var ticker = new Hilo.Ticker(60) // 60FPS刷新
+      ticker.addTick(stage) // 添加定时器, stage中含有tick方法
+      ticker.start()
+  
+      // 创建可视图像
+      // var img = new Hilo.Bitmap({
+      //   width: 400,
+      //   height: 400,
+      //   image: './giphy1.gif'
+      // }).addTo(stage)
+
+      var img = new Image()
+      img.src = './giphy1.gif'
+      document.body.appendChild(img)
+      var video = new VideoPlaybackQuality()
+      video.src = './'
+    }
+  </script>
+</body>
+</html>
