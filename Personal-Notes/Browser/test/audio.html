@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <audio id="audio" loop="true" preload="auto" src="./1.mp3"></audio>
+  <button id="play">play</button>
+  <button id="pause">pause</button>
+  <button id="switch1">switch1</button>
+  <button id="switch2">switch2</button>
+  <script>
+    var audio = document.getElementById('audio')
+    document.getElementById('play').onclick = function () {
+      setTimeout(() => {
+        audio.play()
+      }, 1000);
+    }
+    document.getElementById('pause').onclick = function () {
+      setTimeout(() => {
+        audio.pause()
+      }, 1000);
+    }
+    document.getElementById('switch1').onclick = function () {
+      setTimeout(() => {
+        audio.src = './1.mp3'
+        audio.play()
+      }, 1000);
+    }
+    document.getElementById('switch2').onclick = function () {
+      setTimeout(() => {
+        audio.src = './2.mp3'
+        audio.play()
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
