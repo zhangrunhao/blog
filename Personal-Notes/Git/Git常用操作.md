@@ -11,6 +11,8 @@
 
 > * [git停止追踪文件-最佳实践](https://www.jianshu.com/p/1b235abd8ee8)
 
+* `git rm -r --cached [filename]`
+
 ### 正常情况下
 
 * `git rm -r --cached .idea`
