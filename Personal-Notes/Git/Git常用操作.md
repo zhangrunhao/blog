@@ -61,3 +61,8 @@
 ### 从tag切出
 
 `git checkout -b [新分支名称] [tag名称]`
+
+## 删除远程分支
+
+* `git branch -r -d origin/branch-name`
+* `git push origin :branch-name`
