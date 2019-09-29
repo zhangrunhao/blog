@@ -1,5 +1,8 @@
 var request = require("request");
 
+var count = 0;
+var max = 10;
+
 function randomWord(randomFlag, min, max){
   var str = "",
       range = min,
@@ -16,7 +19,14 @@ function randomWord(randomFlag, min, max){
   return str;
 }
 
-var vote = function (time) {
+let timer = null;
+// let isRunTimer = false
+
+var vote = function () {
+  timer = setTimeout(() => {
+    console.log('定时器执行')
+    vote()
+  }, 5);
   var str = randomWord(false, 32)
   request({
     url: "https://youngblood.zhengzai.tv/api/band/vote",
@@ -31,10 +41,15 @@ var vote = function (time) {
     }
   }, function (error, response, body) {
     if (!error && response.statusCode === 200 && body.status === 1) {
-      console.log(body)
-      vote()
+      if (timer)  clearTimeout (timer)
+      console.log('已投票: ' + count)
+      if (++count < max) vote()
     } else {
-      console.log(body)
+      console.log('投票失败')
+      if (++count < max) {
+        console.log('未达到投票数, 继续投票')
+        vote()
+      }
     }
   });
 }
