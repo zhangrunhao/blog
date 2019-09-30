@@ -23,10 +23,12 @@ let timer = null;
 // let isRunTimer = false
 
 var vote = function () {
+  var isRunTimerVote = false
   timer = setTimeout(() => {
     console.log('定时器执行')
+    isRunTimerVote = true
     vote()
-  }, 5);
+  }, 50);
   var str = randomWord(false, 32)
   request({
     url: "https://youngblood.zhengzai.tv/api/band/vote",
@@ -43,10 +45,10 @@ var vote = function () {
     if (!error && response.statusCode === 200 && body.status === 1) {
       if (timer)  clearTimeout (timer)
       console.log('已投票: ' + count)
-      if (++count < max) vote()
+      if (++count < max && !isRunTimerVote) vote()
     } else {
       console.log('投票失败')
-      if (++count < max) {
+      if (++count < max && !isRunTimerVote) {
         console.log('未达到投票数, 继续投票')
         vote()
       }
