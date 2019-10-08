@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body,
+    div,
+    canvas {
+      image-rendering: optimizeSpeed;
+      -webkit-image-rendering: optimizeSpeed;
+      -webkit-interpolation-mode: nearest-neighbor;
+    }
+
+    body {
+      padding: 0;
+      margin: 0;
+      font-size: 12px;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <!-- <img src="./giphy1.gif" alt=""> -->
+  <div id="app">
+    <div id="stage"></div>
+  </div>
+  <script src="./hilo-standalone.js"></script>
+  <script>
+    window.onload = function () {
+      // 创建舞台
+      var stage = new Hilo.Stage({
+        renderType: 'canvas',
+        container: document.body,
+        width: 375,
+        height: 603
+      })
+  
+      // 创建定时器
+      var ticker = new Hilo.Ticker(60) // 60FPS刷新
+      ticker.addTick(stage)
+      ticker.addTick(Hilo.Tween)
+
+      var myTween = {
+        tick: function () {
+        }
+      }
+
+      ticker.start()
+
+      var bitmap = new Hilo.Bitmap({
+        width: 150,
+        height: 150,
+        image: './test.jpg'
+      }).addTo(stage)
+
+      var tween = new Hilo.Tween(bitmap, {
+        x: 0
+      }, {
+        x: 200
+      }, {
+        duration: 2000
+      })
+
+      tween.start()
+    }
+  </script>
+</body>
+</html>
