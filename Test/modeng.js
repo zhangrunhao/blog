@@ -1,7 +1,7 @@
 var request = require("request");
 
 var count = 0;
-var max = 10;
+var max = 80000;
 
 function randomWord(randomFlag, min, max){
   var str = "",
@@ -28,7 +28,7 @@ var vote = function () {
     console.log('定时器执行')
     isRunTimerVote = true
     vote()
-  }, 50);
+  }, 3000);
   var str = randomWord(false, 32)
   request({
     url: "https://youngblood.zhengzai.tv/api/band/vote",
@@ -38,7 +38,8 @@ var vote = function () {
         "content-type": "application/json",
     },
     body: {
-      id: "891",
+      id: "891", // 妙手回
+      id: "727", // pizza face
       sign: str
     }
   }, function (error, response, body) {
