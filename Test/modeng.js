@@ -1,7 +1,7 @@
 var request = require("request");
 
 var count = 0;
-var max = 80000;
+var max = 100000000;
 
 function randomWord(randomFlag, min, max){
   var str = "",
@@ -24,11 +24,11 @@ let timer = null;
 
 var vote = function () {
   var isRunTimerVote = false
-  timer = setTimeout(() => {
-    console.log('定时器执行')
-    isRunTimerVote = true
-    vote()
-  }, 3000);
+  // timer = setTimeout(() => {
+  //   console.log('定时器执行')
+  //   isRunTimerVote = true
+  //   vote()
+  // }, 3000);
   var str = randomWord(false, 32)
   request({
     url: "https://youngblood.zhengzai.tv/api/band/vote",
@@ -39,15 +39,17 @@ var vote = function () {
     },
     body: {
       id: "891", // 妙手回
-      id: "727", // pizza face
+      // id: "727", // pizza face
       sign: str
     }
   }, function (error, response, body) {
-    if (!error && response.statusCode === 200 && body.status === 1) {
+    if (!error && response.statusCode === 200 && body && body.status === 1) {
       if (timer)  clearTimeout (timer)
       console.log('已投票: ' + count)
       if (++count < max && !isRunTimerVote) vote()
     } else {
+      // console.log(error)
+      // console.log(body)
       console.log('投票失败')
       if (++count < max && !isRunTimerVote) {
         console.log('未达到投票数, 继续投票')
