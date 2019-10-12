@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn1">开始播放1</button>
+  <button id="btn2">开始播放2</button>
+  <video id="v1" src="http://k.sohu.com/static/sugar-workshop/1908_parade/1.0.0/asset/c1/video.mp4"
+    playsinline="true"></video>
+  <!-- <video id="v2" src="http://k.sohu.com/static/sugar-workshop/1908_parade/1.0.0/asset/c2/video.mp4"></video> -->
+  <!-- <video id="v3" src="http://k.sohu.com/static/sugar-workshop/1908_parade/1.0.0/asset/c3/video.mp4"></video> -->
+  <script>
+    window.onload = function () {
+      var getDom = function (id) {
+        return document.getElementById(id)
+      }
+      getDom('btn1').addEventListener('click', function () {
+        getDom('v1').play()
+      })
+      getDom('btn2').addEventListener('click', function () {
+        getDom('v2').play()
+      })
+      getDom('v1').addEventListener('play', function () {
+        var myVideo = document.createElement('video')
+        var r = new XMLHttpRequest();
+        r.onload = function () {
+          myVideo.src = URL.createObjectURL(r.response)
+          myVideo.id = 'v2'
+          myVideo.playsInline = true
+          // myVideo.play()
+        }
+        // 此处进行支持的视频播放格式
+        // if (myVideo.canPlayType('video/mp4;codecs="avc1.42E01E, mp4a.40.2"'))
+        r.open('GET', 'http://k.sohu.com/static/sugar-workshop/1908_parade/1.0.0/asset/c2/video.mp4')
+        r.responseType = 'blob'
+        r.send()
+        document.body.appendChild(myVideo)
+      })
+    }
+  </script>
+</body>
+</html>
