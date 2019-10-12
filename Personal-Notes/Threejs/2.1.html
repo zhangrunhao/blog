@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Three.js</title>
+  <script src="./three.min.js" data-ke-src="./three.min.js"></script>
+  <style>
+  div#canvas-frame {
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 600px;
+    background-color: #EEEEEE;
+  }
+  </style>
+  <script>
+    var renderer, width, height;
+    function initThree() {
+      width = document.getElementById('canvas-frame').clientWidth;
+      height = document.getElementById('canvas-frame').clientHeight;
+      renderer = new THREE.WebGLRenderer({
+        antialias: true // 边缘柔化或扛锯齿
+      })
+      renderer.setSize(width, height)
+      document.getElementById('canvas-frame').appendChild(renderer.domElement)
+      renderer.setClearColor(0xFFFFFF, 1.0) // 场景背景色 
+    }
+    var camera;
+    function initCamera() {
+      camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000)
+      camera.position.x = 0
+      camera.position.y = 1000
+      camera.position.z = 0
+      camera.up.x = 0
+      camera.up.y = 0
+      camera.up.z = 1
+      camera.lookAt(
+        0,
+        0,
+        0
+      )
+    }
+
+    var scene;
+    
+    function initScene() {
+      scene = new THREE.Scene()
+    }
+
+    var light;
+    function initLight() {
+      light = new THREE.DirectionalLight(0xFF0000, 1.0, 0) // 这里应该是一道光
+      light.position.set(100, 100, 200)
+      scene.add(light)
+    }
+
+    var cube;
+    function initObject() {
+      var geometry = new THREE.Geometry() // 声明几何体
+      var material = new THREE.LineBasicMaterial({ // 定义一条线的材质
+        // Color: 颜色 16进制 默认白色
+        // LineWidth: 线的宽度 默认1个单位
+        // Linecap: 线两端的外观 默认圆角端点
+        // Linejoin: 线连接处的外观 默认圆角
+        vertexColors: THREE.VertexColors // 是否使用顶点颜色
+        // Fog: 定义材质的颜色是否受全局啊雾效影响
+      })
+      var color1 = new THREE.Color(0x444444) // 定义颜色
+      var color2 = new THREE.Color(0xFF0000)
+      var color3 = new THREE.Color(0xFF0000)
+
+      // 线的材质可以由两点的颜色决定
+      var p1 = new THREE.Vector3(-100, 0, 100) // 这是一个点
+      var p2 = new THREE.Vector3(100, 0, -100)
+      var p3 = new THREE.Vector3(-1000, 100, -100)
+      geometry.vertices.push(p1) // vertices用来存放点
+      geometry.vertices.push(p2)
+      geometry.vertices.push(p3)
+      geometry.colors.push(color1, color2, color3) // 为定义不同的点, 使用不同的颜色
+      
+      // 第一个参数: 几何图形, 包含了顶点和顶点的颜色
+      // 第二个参数: 线条的材质
+      // 第三个参数: 线的链接方式
+      var line = new THREE.Line(geometry, material, THREE.LineSegments)
+      scene.add(line)
+    }
+
+    function render() {
+      renderer.clear()
+      renderer.render(scene, camera)
+      requestAnimationFrame(render)
+    }
+
+    function threeStart() {
+      initThree()
+      initCamera()
+      initScene()
+      initLight()
+      initObject()
+      render()
+    }
+
+
+  </script>
+</head>
+<body onload="threeStart()">
+  <div id="canvas-frame"></div>
+</body>
+</html>
