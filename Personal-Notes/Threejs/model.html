@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>2.2</title>
+  <script src="./three.min.js" data-ke-src="./three.min.js"></script>
+  <script src="./ColladaLoader.js"></script>
+  <style>
+  div#canvas-frame {
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 600px;
+    background-color: #EEEEEE;
+  }
+  </style>
+  <script>
+    // three.js使用了右手坐标系
+    var renderer, width, height;
+    function initThree() {
+      width = document.getElementById('canvas-frame').clientWidth;
+      height = document.getElementById('canvas-frame').clientHeight;
+      renderer = new THREE.WebGLRenderer({
+        antialias: true // 边缘柔化或扛锯齿
+      })
+      renderer.setSize(width, height)
+      document.getElementById('canvas-frame').appendChild(renderer.domElement)
+      renderer.setClearColor(0xFFFFFF, 1.0) // 场景背景色 
+    }
+    var camera;
+    function initCamera() {
+      camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000)
+      camera.position.x = 50
+      camera.position.y = 50
+      camera.position.z = 50
+      camera.up.x = 0
+      camera.up.y = 0
+      camera.up.z = 1
+      camera.lookAt(
+        0,
+        0,
+        0
+      )
+    }
+
+    var scene;
+    
+    function initScene() {
+      scene = new THREE.Scene()
+    }
+
+
+    var cube;
+    function initObject() {
+      var loader = new THREE.ColladaLoader();
+      loader.load( './model.dae', function ( collada ) {
+        console.log(collada)
+        scene.add(collada.scene);
+      } );
+    }
+
+    function render() {
+      renderer.clear()
+      renderer.render(scene, camera)
+      requestAnimationFrame(render)
+    }
+
+    function threeStart() {
+      initThree()
+      initCamera()
+      initScene()
+      initObject()
+      render()
+    }
+
+
+  </script>
+</head>
+<body onload="threeStart()">
+  <div id="canvas-frame"></div>
+</body>
+</html>
