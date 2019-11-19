@@ -8,18 +8,4 @@
 
 ## 19年下半年任务
 
-### 定个容易再次打脸的任务
-
-* JavaScript设计模式与开发实践(0/22)
-* JavaScript高级程序设计(0/25)
-* TypeScript, 函数式编程.
-* Google developer web fundamentals(1/100)
-* 源码解析: Hilo, Pixi, Vue, React(0/4)
-* 框架使用: ThreeJS(0/100)
-* Flutter实战学习(0/68)
-* 50道LeetCode(0/50)
-
-### 果然被再次打脸, 想办法改善
-
-* 学习Flutter, 并进行种子习惯app开发
-* 早晨设计模式学习
+> 果然又打脸了... 我日. 马上十二月了, 没学啥.
