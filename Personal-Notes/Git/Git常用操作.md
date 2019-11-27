@@ -67,3 +67,15 @@
 ### 删除在本地的远程分支
 
 * `git branch -r -d origin/branch-name`
+
+## 关于某些神操作
+
+### 撤销某次commit修改
+
+* git revert HEAD: 撤销最近一次提交
+* git revert HEAD~1: 撤销上上次提交, 数字从0开始
+* git revert [HEAD]: 撤销[HEAD]这次commit
+
+### 查看操作历史
+
+* git reflog
