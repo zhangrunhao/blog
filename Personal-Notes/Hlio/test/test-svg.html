@@ -32,8 +32,8 @@
   <script src="./hilo-standalone.js"></script>
   <script>
     window.onload = function () {
-      var gameWidth = 109;
-      var gameHeight = 120;
+      var gameWidth = 500;
+      var gameHeight = 820;
       var stargeScaleX = innerWidth / gameWidth;
       var stargeScaleY = innerHeight / gameHeight;
       // 创建舞台
@@ -76,12 +76,12 @@
       // .addTo(stage);
 
 
-      // new Hilo.Graphics()
-      // .lineStyle(5, "#000")
-      // .moveTo(100,230)
-      // .quadraticCurveTo(150, 240, 200, 230)
-      // .endFill()
-      // .addTo(stage);
+      new Hilo.Graphics()
+      .lineStyle(5, "#000")
+      .moveTo(100,230)
+      .quadraticCurveTo(150, 240, 200, 230)
+      .endFill()
+      .addTo(stage);
 
 
       // var img = new Hilo.Bitmap({
