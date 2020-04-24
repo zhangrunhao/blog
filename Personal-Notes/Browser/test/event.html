@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件冒泡|委托|捕获</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    #A {
+      width: 500px;
+      height: 500px;
+      background-color: burlywood;
+    }
+    #B {
+      width: 350px;
+      height: 350px;
+      background-color: cornflowerblue;
+    }
+    #C {
+      width: 200px;
+      height: 200px;
+      background-color: darkgreen;
+    }
+    #D1 {
+      width: 100px;
+      height: 50px;
+      background-color: hotpink;
+    }
+    #D2 {
+      width: 100px;
+      height: 50px;
+      background-color: slateblue;
+    }
+  </style>
+</head>
+<body>
+  <div id="A">
+    aaaaaaa
+    <div id="B">
+      bbbbbbbb
+      <div id="C">
+        cccccccc
+        <div id="D1">
+          d1d1d1d1d1
+        </div>
+        <div id="D2">
+          d2d2d2d2d2
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.getElementById('A').addEventListener('click', () => {
+      // console.log("A") 
+    })
+
+    document.getElementById('B').addEventListener('click', () => {
+      // console.log("B") 
+    })
+
+    document.getElementById('C').addEventListener('click', (e) => {
+      console.log(this)
+      console.log(e.target)
+      // console.log(e.target.id) // D1
+      // console.log("C")
+      // e.stopPropagation();
+    })
+
+    document.getElementById('C').addEventListener('click', function() {
+      // console.log(this)
+    })
+
+    
+
+    // document.getElementById('D1').addEventListener('click', (e) => {
+    //   console.log("D1")
+    //   e.stopPropagation();
+    // })
+
+    // document.getElementById('D2').addEventListener('click', () => {
+    //   console.log("D2") 
+    // })
+  </script>
+</body>
+</html>
