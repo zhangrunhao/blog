@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=375, initial-scale=1.0">
+  <title>测试左右滑动</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+
+    ul,
+    li {
+      padding: 0;
+      margin: 0;
+      list-style: none
+    }
+
+    .wrapper {
+      width: 375px;
+      height: 200px;
+      background-color: blue;
+      overflow: hidden;
+    }
+
+    .wrapper ul {
+      width: 600px;
+      height: 180px;
+      background-color: burlywood;
+    }
+
+    .wrapper ul li {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      float: left;
+      width: 100px;
+      height: 150px;
+      background-color: cornflowerblue;
+      border: solid 5px black;
+      text-align: center;
+      line-height: 150px;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <ul class="content" width="600px">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+      <li>6</li>
+    </ul>
+  </div>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/better-scroll"></script> -->
+  <script>
+    document.body.onload = function() {
+      try {
+        newsApi && newsApi.disableSlide && newsApi.disableSlide(true);
+      } catch (error) {
+        alert(window.newsApi)
+        alert(error) 
+      }
+      let wrapper = document.querySelector('.wrapper')
+      wrapper.addEventListener('touchstart', function (e) {
+        console.log("touchstart")
+        e.preventDefault();
+        e.stopPropagation();
+      })
+      wrapper.addEventListener('touchmove', function (e) {
+        console.log("touchmove")
+        e.preventDefault();
+        e.stopPropagation();
+      })
+      wrapper.addEventListener('touchend', function (e) {
+        console.log("touchend")
+        e.preventDefault();
+        e.stopPropagation();
+      })
+      wrapper.addEventListener('touchcancel', function (e) {
+        console.log("touchcancel")
+        e.preventDefault();
+        e.stopPropagation();
+      })
+      
+    }
+  </script>
+</body>
+
+</html>
