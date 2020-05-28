@@ -59,36 +59,41 @@
     </ul>
   </div>
   <!-- <script src="https://cdn.jsdelivr.net/npm/better-scroll"></script> -->
+  <script src="./jsKit.js"></script>
+  <!-- <script src="http://k.sohu.com/static/uploads/20200316/jsKit.js?t=1590654154569"></script> -->
   <script>
     document.body.onload = function() {
+      console.log(jsBridgeClient)
+      console.log(jsKitClient)
+      // console.log(newsApi)
+      jsKitClient.onDeviceReady()
       try {
         newsApi && newsApi.disableSlide && newsApi.disableSlide(true);
       } catch (error) {
-        alert(window.newsApi)
+        // alert(window.newsApi)
         alert(error) 
       }
-      let wrapper = document.querySelector('.wrapper')
-      wrapper.addEventListener('touchstart', function (e) {
-        console.log("touchstart")
-        e.preventDefault();
-        e.stopPropagation();
-      })
-      wrapper.addEventListener('touchmove', function (e) {
-        console.log("touchmove")
-        e.preventDefault();
-        e.stopPropagation();
-      })
-      wrapper.addEventListener('touchend', function (e) {
-        console.log("touchend")
-        e.preventDefault();
-        e.stopPropagation();
-      })
-      wrapper.addEventListener('touchcancel', function (e) {
-        console.log("touchcancel")
-        e.preventDefault();
-        e.stopPropagation();
-      })
-      
+      // let wrapper = document.querySelector('.wrapper')
+      // wrapper.addEventListener('touchstart', function (e) {
+      //   console.log("touchstart")
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // })
+      // wrapper.addEventListener('touchmove', function (e) {
+      //   console.log("touchmove")
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // })
+      // wrapper.addEventListener('touchend', function (e) {
+      //   console.log("touchend")
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // })
+      // wrapper.addEventListener('touchcancel', function (e) {
+      //   console.log("touchcancel")
+      //   e.preventDefault();
+      //   e.stopPropagation();
+      // })
     }
   </script>
 </body>
