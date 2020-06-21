@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <style>
+    .outer {
+      width: 500px;
+      height: 500px;
+      background-color: wheat;
+      position: relative;
+    }
+
+    .inner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      background-color: cornflowerblue;
+    }
+
+    .inner {
+      animation-name: myAnimaiton;
+      animation-duration: 2s;
+    }
+
+    @keyframes myAnimaiton {
+
+      from,
+      60%,
+      75%,
+      90%,
+      to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+      }
+
+      0% {
+        opacity: 0;
+        transform: translate3d(0, -3000px, 0) scaleY(3);
+      }
+
+      60% {
+        opacity: 1;
+        transform: translate3d(0, 25px, 0) scaleY(0.9);
+      }
+
+      75% {
+        transform: translate3d(0, -10px, 0) scaleY(0.95);
+      }
+
+      90% {
+        transform: translate3d(0, 5px, 0) scaleY(0.985);
+      }
+
+      to {
+        transform: translate3d(0, 0, 0);
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="outer">
+    <div class="inner">inner</div>
+  </div>
+</body>
+
+</html>
