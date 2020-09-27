@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: #000;
+            position: absolute;
+            ;
+            top: 100px;
+            left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box" id="box"></div>
+    <ul>
+
+        <li>阻尼系数: <input type="range" max="1" min="0" step="0.05" value="0.1" onchange="a=this.value;shake()"></li>
+        <li>强劲系数: <input type="range" max="10" min="0" step="0.5" value="1" onchange="b=this.value;shake()"></li>
+        <li>幅度（质量）: <input type="range" max="1000" min="100" step="0.1" value="1" onchange="A=this.value;shake()"></li>
+
+        <input type="button" value="run()" onclick="render()">
+    </ul>
+    <script>
+        var t = 0;
+        var a = 0.05; //阻尼
+        var b = 1; //劲度系数
+        var A = 100; //质量
+        var phi = 100; //初始质量
+
+        var intervalId = 0;
+
+        function render() {
+            console.log('a', a)
+            console.log('b', b)
+            console.log('A', A)
+
+            clearInterval(intervalId);
+            t = 0;
+            var elem = document.getElementById('box');
+
+            intervalId = setInterval(function () {
+                t++;
+                //x = exp(-at)*A*cos(bt + phi)
+                elem.style.left = Math.exp(-a * t) * A * Math.cos(b * t + phi) + phi + "px";
+
+            }, 30);
+        }
+
+        render();
+
+        /** 参考资料 
+            http://www.docin.com/p-680413642.html
+            http://zh.wikipedia.org/wiki/%E6%8C%AF%E5%8A%A8
+        */
+    </script>
+</body>
+
+</html>
