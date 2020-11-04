@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用dom获取高度</title>
+  <style>
+    .bottom {
+      display: none;
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 2px;
+      height: 2px;
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div class="top" id="top"></div>
+  <div class="bottom" id="bottom"></div>
+  <script>
+    const winHeight = document.documentElement.clientHeight || window.screen.height || window.outerHeight || document.documentElement.scrollHeight
+    console.log(winHeight)
+    const domBottom = document.getElementById('bottom').getBoundingClientRect().bottom
+    console.log(winHeight)
+  </script>
+</body>
+</html>
