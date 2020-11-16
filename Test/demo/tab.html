@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tab选项卡</title>
+  <style>
+    div,
+    ul,
+    li,
+    a {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-decoration: none;
+    }
+
+    body {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .left {
+      width: 50%;
+      float: left;
+    }
+    .tab {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .tab-menu-wrap {
+      width: 20%;
+      float: left;
+
+      height: 500px;
+      position: relative;
+    }
+    .tab-menu {
+      /* 指定这个的位置 */
+      position: absolute;
+      top: 10px;
+      left: 20px;
+    }
+
+    .menu {
+      /* 所有menu的统一样式 */
+      width: 60px;
+      height: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    .menu1 {
+      /* menu1的样式 */
+      background-image: url(./menu1.png);
+    }
+    .menu2 {
+      /* menu2的样式 */
+    }
+
+    .menu.active {
+      /* 选中的menu 样式 */
+      color: #f00;
+    }
+
+    .tab-content {
+      width: 80%;
+      background-color: antiquewhite;
+      float: right;
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.show {
+      display: block;
+    }
+
+    .right {
+      float: right;
+      width: 50%;
+      height: 1080px;
+    }
+
+    .right iframe {
+      width: 610px;
+      height: 1080px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="left">
+    <div class="tab">
+      <div class="tab-menu-wrap">
+        <ul class="tab-menu">
+          <li class="menu menu1 active">票务查询</li>
+          <li class="menu menu2">特色服务</li>
+          <li class="menu menu3">车站周边</li>
+          <li class="menu menu4">menu4</li>
+          <li class="menu menu5">menu5</li>
+        </ul>
+      </div>
+
+      <div class="tab-content">
+        <div class="content show">
+          <ul>
+            <li>menu1 - one</li>
+            <li>menu2 - two</li>
+          </ul>
+        </div>
+        <div class="content">
+          <img src="http://img95.699pic.com/photo/50055/9074.jpg_wh300.jpg" alt="">
+        </div>
+        <div class="content">content3</div>
+        <div class="content">content4</div>
+        <div class="content">content5</div>
+      </div>
+
+    </div>
+  </div>
+  <div class="right">
+    <iframe src="http://121.36.81.150:8080/" frameborder="0"></iframe>
+  </div>
+  <script src="http://k.sohu.com/static/sugar-workshop/script/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    $(function () {
+      var $menuArray = $('.tab-menu').find('.menu'); // 找到所有的menu, 并形成数组
+      var $contentArray = $('.tab-content').find('.content');
+      for (var i = 0; i < $menuArray.length; i++) {
+        $($menuArray[i])[0].index = i; // 给menu添加索引, 便于查找
+        $($menuArray[i]).on('click', function () {
+          // 取消所有menu, content的样式
+          $($menuArray).removeClass('active');
+          $($contentArray).removeClass('show');
+
+          // 根据this找到当前点击的menu
+          $(this).addClass('active'); // this: 表示当前的menu
+          $($contentArray[$(this)[0].index]).addClass('show'); // 根据当前的menu的索引, 找到对应的content, 并显示
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>
