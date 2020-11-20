@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中英文切换</title>
+  <style>
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+    }
+  </style>
+</head>
+
+<body>
+  <button id="btn">切换语言</button>
+  <img src="" alt="">
+  <script src="http://k.sohu.com/static/sugar-workshop/script/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var language = sessionStorage.getItem('language')
+      if (!language) language = 'zh'
+
+      var chineseImageSrc =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJC9_YuUo-KEhimDxGqaoyGpiy3ZMDx1WGUA&usqp=CAU"
+      var englishImageSrc =
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-Q16gCsEUg7ZAxjM6BmV3Rljuw3eQ60OBHQ&usqp=CAU"
+      var imgSrc = (language === "zh" ? chineseImageSrc : englishImageSrc)
+
+      console.log(imgSrc)
+      $('img').attr('src', imgSrc);
+      $('#btn').on('click', function () {
+        translate()
+      })
+    });
+
+    function translate() { // 设置语言并存储
+      var value = sessionStorage.getItem("language");
+      if (value === "zh") {
+        sessionStorage.setItem("language", "en");
+      } else {
+        sessionStorage.setItem("language", "zh");
+      }
+      window.location.reload(); //刷新当前页面.
+    }
+  </script>
+</body>
+
+</html>
