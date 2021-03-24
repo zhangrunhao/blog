@@ -16,7 +16,7 @@ var image = {
   'url': '//path/to/aaa.jpg',
 };
 
-int testVariables() {
+int? testVariables() {
   print(name);
   print(year);
   print(antennaDiameter);
@@ -32,7 +32,7 @@ Future getAJoke() {
   });
 }
 
-int controlFlowStatements() {
+int? controlFlowStatements() {
   if (year >= 2001) {
     print('21st century');
   } else if (year >= 1901) {
