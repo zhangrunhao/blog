@@ -15,4 +15,8 @@ export http_proxy=http://127.0.0.1:7890
 
 # 配置http和https访问 (外部控制设置)(也是盲猜)
 export all_proxy=socks5://127.0.0.1:9090
+
+# 取消代理
+unset http_proxy
+unset https_proxy
 ```
