@@ -12,6 +12,20 @@ VALUES
 ("Upload", "借出", "3", "6", "2021-11-22 00:00:00"),
 ("DownLoad", "收款", "3", "7", "2021-11-22 00:00:00"),
 ("Upload", "还款", "3", "8", "2021-11-22 00:00:00");
+
+
+INSERT INTO trade_cate  
+(icon, name, type, operate, create_at) 
+VALUES 
+("Funds", "基金", "1", "1", "2021-11-22 00:00:00"),
+("TeaDrink", "喝茶", "1", "2", "2021-11-22 00:00:00");
+
+INSERT INTO account_default  
+(name, cate, icon,create_at) 
+VALUES 
+("支付宝", "1", "Alipay", "2021-11-22 00:00:00"),
+("微信", "1", "Wechat", "2021-11-22 00:00:00"),
+("信用卡", "2", "Credit", "2021-11-22 00:00:00");
 ```
 
 ## 视图
