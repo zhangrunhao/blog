@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      function * nTimes(n) {
+        debugger
+        // console.log("nTimes start n: ", n)
+        if (n > 0) {
+          debugger
+          yield * nTimes(n - 1)
+          debugger
+          yield n - 1
+          debugger
+          // console.log("nTimes if start, n: ", n)
+          // console.log("yield n - 1, ", n)
+          // console.log("nTimes if end n: ", n)
+        }
+      }
+      debugger
+      const g = nTimes(3)
+      debugger
+      console.log(g.next()) // 0
+      debugger
+      console.log(g.next()) // 1
+      debugger
+      console.log(g.next()) // 2
+      debugger
+      console.log(g.next())
+      debugger
+      console.log(g.next())
+      // for (const x of nTimes(3)) {
+      //   console.log('for of x: ', x)
+      // }
+    </script>
+  </body>
+</html>
