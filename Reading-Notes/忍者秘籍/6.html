@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function* fun(val) {
+      val = yield val * 2
+      yield val
+    }
+    let g = fun(2)
+    var a = g.next(3).value
+    var b = g.next(5).value
+    console.log(a)
+    console.log(b)
+  </script>
+</body>
+</html>
