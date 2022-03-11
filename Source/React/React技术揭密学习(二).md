@@ -1,4 +1,4 @@
-# React技术揭密学习(一)
+# React技术揭密学习(二)
 
 > 学习[React技术揭秘](https://react.iamkasong.com/)
 
@@ -571,3 +571,8 @@ function commitLayoutEffects(root: FiberRoot, committedLanes: Lanes) {
 
 * `mutation阶段`执行后, `layout`开始前, **切换`root.current = finishWork`**
 * 因为layout执行的生命周期函数和hook需要获取新的dom信息
+
+## 补充几点
+
+* 在执行任意`useLayoutEffect`的函数之前, 会先执行所有`useLayoutEffect`的销毁函数
+* 先执行`useLayoutEffect`的销毁函数, 再执行`useLayoutEffect`的注册函数, 所有都是同步执行
