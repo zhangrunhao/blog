@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Build Own Hook</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script>
+      /**
+       * 1. 通过一些途径产生更新, 更新造成组件render
+       *    1. mount: ReactDOM.render产生mount更新, 更新内容为初始值
+       *    2. update: updateNum触发一次更新, 内容为num => num + 1
+       * 2. 组件render时, useState返回num为更新后的结果
+       */
+
+      function dispatchAction(queue, action) {
+        // 创建update
+        const update = {
+          // 更新执行的函数
+          action,
+          // 与同一个hook的其他更新形成链表
+          next: null,
+        };
+        // 环状单向链表操作
+        if (queue.pending === null) {
+          update.next = update
+        }
+      }
+
+      function App() {
+        const [num, updateNum] = useState(0);
+        return (
+          <p
+            onClick={() => {
+              updateNum((num) => num + 1);
+              updateNum((num) => num + 1);
+              updateNum((num) => num + 1);
+            }}
+          >
+            Num: {num}
+          </p>
+        );
+      }
+    </script>
+  </body>
+</html>
