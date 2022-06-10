@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <button id="btn">发送请求</button>
+    <script src="https://k.sohu.com/static/uploads/20220129/zepto.min.js"></script>
+    <script>
+      // document.getElementById("btn").addEventListener('click', function () {
+      //   console.log(11)
+      //   $.ajax({
+      //     url: 'https://pic.k.sohu.com/debug/st/client/e.gif',
+      //     type: 'post',
+      //     contentType: "application/json",
+      //     data: {
+      //       _act: "zhangrh-test",
+      //       _tp: "post.html-json"
+      //     }
+      //   })
+      // })
+
+      var time = 0;
+      var timer = null;
+      function fn() {
+        if (timer) clearTimeout(timer);
+        console.log("fn", time);
+        timer = setTimeout(fn, time += 1000);
+      }
+      fn();
+    </script>
+  </body>
+</html>
