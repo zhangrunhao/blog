@@ -60,7 +60,9 @@
       queue.on('complete', function () {
         var img = new Hilo.Bitmap({
           image: queue.get('bg').content,
-          rect: [0, 0, 440, 599],
+          // rect: [0, 0, 440, 599],
+          width: 200,
+          height: 300,
         }).addTo(stage)      
       })
   
