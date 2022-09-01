@@ -1,20 +1,23 @@
 {
   "cSpell.words": [
-    "Introspector",
-    "JDBC",
-    "Logback",
     "classpath",
     "enableassertions",
+    "finclip",
     "hilo",
     "instanceof",
+    "Introspector",
     "itranswarp",
+    "JDBC",
     "jmod",
     "learnjava",
+    "Logback",
+    "mpass",
     "newssdk",
     "offlinedemo",
     "pixi",
     "pixijs",
     "println",
-    "shadowdom"
+    "shadowdom",
+    "uniapp"
   ]
 }
