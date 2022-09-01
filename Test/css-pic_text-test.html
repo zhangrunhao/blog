@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .g-news-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid #f9f9f9;
+      }
+
+      .g-news-item.pic-text a {
+        overflow: hidden;
+      }
+      .g-news-item > a {
+        display: block;
+        margin: 0 1.4rem;
+      }
+      .g-news-item * {
+        margin: 0;
+        padding: 0;
+        font-style: normal;
+        font-weight: normal;
+        text-decoration: none;
+      }
+      a {
+        color: #2980b9;
+        text-decoration: none;
+      }
+      a {
+        background-color: transparent;
+      }
+      .g-news-item.pic-text a .pic {
+        position: relative;
+        float: left;
+        width: 11rem;
+        height: 7.25rem;
+        overflow: hidden;
+        margin-right: 1rem;
+        border-radius: 0.5rem;
+        background-color: #dadada;
+      }
+      .g-news-item.pic-text a .pic img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .g-news-item.pic-text a .title {
+        height: 7.25rem;
+      }
+      .g-news-item > a .title {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #222222;
+        font-size: 1.6rem;
+        line-height: 2.5rem;
+        text-align: justify;
+      }
+      .hot {
+        color: #ee2f10;
+      }
+      .g-news-item > a .bottom-bar {
+        position: relative;
+        margin-top: 0.9rem;
+        font-size: 1.1rem;
+        line-height: 2.4rem;
+      }
+      .g-news-item > a .bottom-bar .meta-info {
+        color: #929292;
+      }
+      .g-news-item > a .bottom-bar .meta-info i {
+        margin-right: 1rem;
+      }
+      .g-news-item > a .bottom-bar .voice-news.style-icon {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 24px;
+        height: 24px;
+      }
+      .g-news-item > a .bottom-bar .voice-news.style-icon i {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        overflow: hidden;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEIAAABCCAMAAADUivDaAAAAPFBMVEUAAABOTk5GRkZFRUVJSUlGRkZHR0dHR0dISEhFRUVFRUVFRUVFRUVFRUVGRkZHR0dFRUVFRUVGRkZFRUV6OnbfAAAAE3RSTlMADvnnG6pNRzHRmojgxqI+t35oiG8KxwAAANxJREFUWMPtlUkOwjAQBL0kcTYSoP7/VyQCzCEyIu5IXFwnH6xye5txlUqlchLd2GsCv0CUDCkCKBFG0BTrzF7RD60/FGGvGKE9FGGvSMDtpwgT7BQbE7C6LLZhsgp3hYvLMwWMjKIJ0OUVgbyivzWvdb7G4ItiJm4OH6ApUgyfxa9wL1IkID1Hd2iLFG6EZTsVGMoUK8zbnUAsU3gI72nhDwphI8JxSpeqPy39gevfTP/sRhfLS451IKHwWRCh/FoQoQlYkMJWZPhWaIgWRFFYkOhEuiW5SqVSOYkHVskszjT5DwoAAAAASUVORK5CYII=") no-repeat 0 0;
+        -webkit-background-size: 100% auto;
+        background-size: 100% auto;
+        border: 1px solid #dadada;
+        border-radius: 100%;
+      }
+
+
+      /**  换样式 **/
+      .g-news-item.pic-text.pic-text-right a .pic {
+        float: right;
+        margin-right: 0;
+        margin-left: 1rem;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <!-- <div class="g-news-item pic-text"> -->
+    <div class="g-news-item pic-text pic-text-right">
+      <a>
+        <div class="pic">
+          <img
+            src="http://n1.itc.cn/img8/wb/recom/2022/07/22/165847376776939205.PNG"
+            alt=""
+          />
+        </div>
+        <h4 class="title">
+          现场爆光爆光爆光爆光现<span class="hot">场爆光爆光</span>爆光爆光现场爆光爆光爆光爆光现场爆光爆光爆光爆光现场爆光爆光爆光爆光现场爆光爆光爆光爆光
+        </h4>
+        <div class="bottom-bar">
+          <div class="meta-info">
+            <i>观察者网</i>
+          </div>
+          <div class="voice-news style-icon">
+            <i></i>
+            <audio></audio>
+          </div>
+        </div>
+      </a>
+    </div>
+  </body>
+</html>
