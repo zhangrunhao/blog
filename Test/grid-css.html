@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grid</title>
+    <style>
+      .wrapper {
+        margin: 60px;
+        /* 确定布局 */
+        display: grid;
+        /* 声明行高度 */
+        grid-template-rows: 100px 200px;
+        /* 声明列的宽度 */
+        grid-template-columns: repeat(3, 100px);
+        /* 行间距和列间距 */
+        gap: 20px;
+      }
+      .item {
+        text-align: center;
+        font-size: 30px;
+        color: #fff;
+      }
+      .one {
+        background: #19caad;
+      }
+      .two {
+        background: #8cc7b5;
+      }
+      .three {
+        background: #d1ba74;
+      }
+      .four {
+        background: #bee7e9;
+      }
+      .five {
+        background: #e6ceac;
+      }
+      .six {
+        background: #ecad9e;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="item one">one</div>
+      <div class="item two">two</div>
+      <div class="item three">three</div>
+      <div class="item four">four</div>
+      <div class="item five">five</div>
+      <div class="item six">six</div>
+    </div>
+  </body>
+</html>
