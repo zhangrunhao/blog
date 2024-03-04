@@ -1,11 +1,9 @@
 class Person {
-  final String _name;
-  Person(this._name);
+  Person();
   String greet(String who) => '';
 }
 
 class Impostor implements Person {
-  @override
   String get _name => 'aa';
 
   @override
