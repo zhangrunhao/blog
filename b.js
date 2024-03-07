@@ -1,5 +1,5 @@
-const a = require("./a")
+const a = require("./a");
 
 module.exports = function () {
   a.f1();
-}
+};
