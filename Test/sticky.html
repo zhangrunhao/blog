@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    html body {
+      margin: 0;
+      padding: 0;
+    }
+    .top-bar {
+      width: 100%;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+      background-color: blueviolet;
+      height: 60px;
+    }
+    .body {
+      width: 800px;
+      display: flex;
+      align-items: flex-start;
+      justify-self: center;
+      gap: 10px;
+      padding-top: 72px;
+    }
+
+    .left {
+      background-color: antiquewhite;
+      width: 500px;
+      position: sticky;
+    }
+    .right {
+      background-color: brown;
+      width: 200px;
+      position: sticky;
+    }
+    .li {
+      background-color: pink;
+      margin-bottom: 10px;
+      width: 100%;
+      height: 150px;
+    }
+  </style>
+
+  <body>
+    <div class="top-bar"></div>
+    <div class="body">
+      <div class="left">
+        <div class="li">li</div>
+        <div class="li">li</div>
+      </div>
+      <div class="right">
+        <div class="li">li</div>
+        <div class="li">li</div>
+        <div class="li">li</div>
+        <div class="li">li</div>
+        <div class="li">li</div>
+        <div class="li">li</div>
+        <div class="li">li</div>
+        <div class="li">li</div>
+      </div>
+    </div>
+    <script>
+      const left = document.querySelector(".left");
+      const right = document.querySelector(".right");
+      const target = left.offsetHeight > right.offsetHeight ? right : left;
+      const diffH = innerHeight - target.offsetHeight + 72;
+      if (diffH > 0) {
+        target.style.top = "0px";
+      } else {
+        target.style.top = `${diffH}px`;
+      }
+    </script>
+  </body>
+</html>
